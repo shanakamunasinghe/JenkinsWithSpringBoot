@@ -1,9 +1,7 @@
 package com.creative.web.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class ProjectData {
@@ -14,6 +12,8 @@ public class ProjectData {
     private String name;
     private String createUser;
     private boolean status;
+    @OneToMany(mappedBy = "project")
+    Set<UsersProjectsData> usersProjectsData;
 
     public ProjectData() {
     }
@@ -54,5 +54,13 @@ public class ProjectData {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public Set<UsersProjectsData> getUsersProjectsData() {
+        return usersProjectsData;
+    }
+
+    public void setUsersProjectsData(Set<UsersProjectsData> usersProjectsData) {
+        this.usersProjectsData = usersProjectsData;
     }
 }

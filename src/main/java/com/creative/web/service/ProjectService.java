@@ -14,7 +14,7 @@ public class ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
 
-    public List<ProjectDataDTO> findALLUsers(){
+    public List<ProjectDataDTO> findALLUProjects(){
         List<ProjectData> projectList = projectRepository.findAll();
         List<ProjectDataDTO> projectDTOList = new ArrayList<>();
         if (projectList != null) {
@@ -42,7 +42,7 @@ public class ProjectService {
 
     }
 
-    public void createUser(ProjectDataDTO projectDTO){
+    public void createProject(ProjectDataDTO projectDTO){
 
         ProjectData project = new ProjectData();
         project.setName(projectDTO.getName());
@@ -51,7 +51,7 @@ public class ProjectService {
         projectRepository.save(project);
     }
 
-    public void deleteUser(ProjectDataDTO projectDTO){
+    public void deleteProject(ProjectDataDTO projectDTO){
         ProjectData project = new ProjectData();
         projectRepository.delete(project);
     }

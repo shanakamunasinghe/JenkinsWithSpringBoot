@@ -2,6 +2,7 @@ package com.creative.web.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table
@@ -15,7 +16,8 @@ public class UserData implements Serializable {
     private String jenkinsName;
     private String jenkinsPassword;
     private String workingSpace;
-
+    @OneToMany(mappedBy = "user")
+    Set<UsersProjectsData> usersProjectsData;
 
 
     public UserData() {
@@ -74,5 +76,13 @@ public class UserData implements Serializable {
 
     public void setWorkingSpace(String workingSpace) {
         this.workingSpace = workingSpace;
+    }
+
+    public Set<UsersProjectsData> getUsersProjectsData() {
+        return usersProjectsData;
+    }
+
+    public void setUsersProjectsData(Set<UsersProjectsData> usersProjectsData) {
+        this.usersProjectsData = usersProjectsData;
     }
 }

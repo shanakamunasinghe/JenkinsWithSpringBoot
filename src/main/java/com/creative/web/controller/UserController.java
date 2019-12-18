@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,10 +16,41 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/userData",
+    @RequestMapping(value = "/usersData",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<UserDataDTO>> getAllUserData() {
         return new ResponseEntity<List<UserDataDTO>>(userService.findALLUsers(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/userData",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDataDTO> getUserData(@PathVariable("id") Integer id) {
+        return new ResponseEntity<UserDataDTO>(userService.findById(id), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/userData",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Integer> createUser(@PathVariable("user") UserDataDTO user) {
+        userService.createUser(user);
+        return new ResponseEntity<Integer>(01, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/userData",
+            method = RequestMethod.PUT,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Integer> updateUserData(@PathVariable("user") UserDataDTO user) {
+        userService.createUser(user);
+        return new ResponseEntity<Integer>(user.getId(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/userData",
+            method = RequestMethod.DELETE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Integer> deleteUserData(@PathVariable("user") UserDataDTO user) {
+        userService.deleteUser(user);
+        return new ResponseEntity<Integer>(user.getId(), HttpStatus.OK);
     }
 }
