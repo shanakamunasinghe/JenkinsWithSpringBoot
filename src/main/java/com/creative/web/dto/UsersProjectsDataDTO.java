@@ -1,29 +1,20 @@
-package com.creative.web.model;
+package com.creative.web.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import com.creative.web.model.ProjectData;
+import com.creative.web.model.UserData;
 
-@Entity
-public class UsersProjectsData {
-    @Id
+
+public class UsersProjectsDataDTO {
+
     private Integer id;
-
-    @ManyToOne
-    @JoinColumn(name = "project_id")
     private ProjectData project;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
     private UserData user;
-
     private Integer assignedUserId;
 
-    public UsersProjectsData() {
+    public UsersProjectsDataDTO() {
     }
 
-    public UsersProjectsData(Integer id, ProjectData project, UserData user, Integer assignedUserId) {
+    public UsersProjectsDataDTO(Integer id, ProjectData project, UserData user, Integer assignedUserId) {
         this.id = id;
         this.project = project;
         this.user = user;
@@ -58,7 +49,7 @@ public class UsersProjectsData {
         return assignedUserId;
     }
 
-    public void setAssignedUserId(Integer assingedUserId) {
-        this.assignedUserId = assingedUserId;
+    public void setAssignedUserId(Integer assignedUserId) {
+        this.assignedUserId = assignedUserId;
     }
 }

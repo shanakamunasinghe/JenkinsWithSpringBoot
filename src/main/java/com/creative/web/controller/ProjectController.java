@@ -31,14 +31,14 @@ public class ProjectController {
     @RequestMapping(value = "/projectData",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Integer> createProject(@PathVariable("project") ProjectDataDTO project) {
+    public ResponseEntity<Integer> createProject(@RequestBody ProjectDataDTO project) {
         projectService.createProject(project);
         return new ResponseEntity<Integer>(01, HttpStatus.OK);
     }
     @RequestMapping(value = "/projectData",
             method = RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Integer> updateProject(@PathVariable("project") ProjectDataDTO project) {
+    public ResponseEntity<Integer> updateProject(@RequestBody ProjectDataDTO project) {
         projectService.createProject(project);
         return new ResponseEntity<Integer>(project.getId(), HttpStatus.OK);
     }
@@ -46,7 +46,7 @@ public class ProjectController {
     @RequestMapping(value = "/projectData",
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Integer> deleteProject(@PathVariable("project") ProjectDataDTO project) {
+    public ResponseEntity<Integer> deleteProject(@RequestBody ProjectDataDTO project) {
         projectService.deleteProject(project);
         return new ResponseEntity<Integer>(project.getId(), HttpStatus.OK);
     }

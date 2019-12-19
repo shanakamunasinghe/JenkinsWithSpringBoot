@@ -1,5 +1,4 @@
 package com.creative.web.controller;
-
 import com.creative.web.dto.UserDataDTO;
 import com.creative.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -19,7 +19,7 @@ public class UserController {
     @RequestMapping(value = "/usersData",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<UserDataDTO>> getAllUserData() {
+    public ResponseEntity<List<UserDataDTO>> getAllUserData() throws IOException {
         return new ResponseEntity<List<UserDataDTO>>(userService.findALLUsers(), HttpStatus.OK);
     }
 
@@ -33,7 +33,7 @@ public class UserController {
     @RequestMapping(value = "/userData",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Integer> createUser(@PathVariable("user") UserDataDTO user) {
+    public ResponseEntity<Integer> createUser(@RequestBody UserDataDTO user) {
         userService.createUser(user);
         return new ResponseEntity<Integer>(01, HttpStatus.OK);
     }
@@ -41,7 +41,7 @@ public class UserController {
     @RequestMapping(value = "/userData",
             method = RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Integer> updateUserData(@PathVariable("user") UserDataDTO user) {
+    public ResponseEntity<Integer> updateUserData(@RequestBody UserDataDTO user) {
         userService.createUser(user);
         return new ResponseEntity<Integer>(user.getId(), HttpStatus.OK);
     }
@@ -49,7 +49,7 @@ public class UserController {
     @RequestMapping(value = "/userData",
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Integer> deleteUserData(@PathVariable("user") UserDataDTO user) {
+    public ResponseEntity<Integer> deleteUserData(@RequestBody UserDataDTO user) {
         userService.deleteUser(user);
         return new ResponseEntity<Integer>(user.getId(), HttpStatus.OK);
     }
