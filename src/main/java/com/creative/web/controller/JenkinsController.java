@@ -28,19 +28,19 @@ public class JenkinsController {
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Integer> deleteJenkinsUser() throws IOException {
-        return new ResponseEntity<Integer>(jenkinsService.createJenkinsUser(), HttpStatus.OK);
+        return new ResponseEntity<Integer>(jenkinsService.deleteJenkinsUser(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/runJenkinsJob",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Integer> runJenkinsJob() throws IOException {
-        return new ResponseEntity<Integer>(jenkinsService.createJenkinsUser(), HttpStatus.OK);
+        return new ResponseEntity<Integer>(jenkinsService.runJenkinsJob(), HttpStatus.OK);
     }
     @RequestMapping(value = "/getJenkinsStatus",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Integer> getJenkinsStatus() throws IOException {
-        return new ResponseEntity<Integer>(jenkinsService.createJenkinsUser(), HttpStatus.OK);
+        return new ResponseEntity<Integer>(jenkinsService.getJenkinsStatus(), HttpStatus.OK);
     }
 }

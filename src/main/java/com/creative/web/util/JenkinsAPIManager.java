@@ -1,5 +1,6 @@
 package com.creative.web.util;
 
+import com.creative.web.dto.JenkinsUserDataDTO;
 import com.google.gson.JsonObject;
 import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
@@ -24,8 +25,11 @@ import java.util.List;
 public class JenkinsAPIManager {
     CredentialsProvider provider = new BasicCredentialsProvider();
     HttpClient client;
-    public JenkinsAPIManager(){
+    List<NameValuePair> formParams;
+//    String jenkinsURL = "http://localhost:8080/";
 
+    public JenkinsAPIManager(){
+        formParams = new ArrayList<NameValuePair>();
         UsernamePasswordCredentials credentials = new UsernamePasswordCredentials("admin", "11be180ad7282a21ca74bc2c589257e6dd");
         provider.setCredentials(AuthScope.ANY, credentials);
         client = HttpClientBuilder.create().setDefaultCredentialsProvider(provider).build();
@@ -52,10 +56,9 @@ public class JenkinsAPIManager {
 
     public void deleteJenkinsUser(String user) throws IOException {
 
-        List<NameValuePair> formparams = new ArrayList<NameValuePair>();
-        formparams.add(new BasicNameValuePair("json", "{}"));
-        formparams.add(new BasicNameValuePair("Submit", "Yes"));
-        UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, Consts.UTF_8);
+        formParams.add(new BasicNameValuePair("json", "{}"));
+        formParams.add(new BasicNameValuePair("Submit", "Yes"));
+        UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formParams, Consts.UTF_8);
         HttpPost httppost = new HttpPost("http://localhost:8080/securityRealm/user/"+user+"/doDelete");
         httppost.setEntity(entity);
 
@@ -63,33 +66,48 @@ public class JenkinsAPIManager {
         System.out.println(response.getStatusLine().getStatusCode());
     }
 
-    public void createJenkinsUser() throws IOException {
+    public void createJenkinsUser(JenkinsUserDataDTO jenkinsUserDataDTO) throws IOException {
 
-        List<NameValuePair> formparams = new ArrayList<NameValuePair>();
-        formparams.add(new BasicNameValuePair("username", "isuru"));
-        formparams.add(new BasicNameValuePair("password1", "12"));
-        formparams.add(new BasicNameValuePair("password2", "12"));
-        formparams.add(new BasicNameValuePair("fullname", "isuru"));
-        formparams.add(new BasicNameValuePair("email", "isuru@gmail.com"));
+
+        formParams.add(new BasicNameValuePair("username", jenkinsUserDataDTO.getUserName()));
+        formParams.add(new BasicNameValuePair("password1", jenkinsUserDataDTO.getPassword()));
+        formParams.add(new BasicNameValuePair("password2", jenkinsUserDataDTO.getPassword()));
+        formParams.add(new BasicNameValuePair("fullname", jenkinsUserDataDTO.getUserName()));
+        formParams.add(new BasicNameValuePair("email", jenkinsUserDataDTO.getEmail()));
 
 // Create Inner JSON Object
         JsonObject json = new JsonObject();
-        json.addProperty("username", "isuru");
-        json.addProperty("password1", "12");
+        json.addProperty("username", jenkinsUserDataDTO.getPassword());
+        json.addProperty("password1", jenkinsUserDataDTO.getPassword());
         json.addProperty("$redact", "[\"password1\",\"password2\"]");
-        json.addProperty("password2", "12");
-        json.addProperty("fullname", "isuru");
-        json.addProperty("email", "isuru@gmail.com");
+        json.addProperty("password2", jenkinsUserDataDTO.getPassword());
+        json.addProperty("fullname", jenkinsUserDataDTO.getUserName());
+        json.addProperty("email", jenkinsUserDataDTO.getEmail());
         System.out.println(json.toString());
 
 
-        formparams.add(new BasicNameValuePair("json", json.toString()));
-        formparams.add(new BasicNameValuePair("Submit", "Create User"));
-        UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, Consts.UTF_8);
+        formParams.add(new BasicNameValuePair("json", json.toString()));
+        formParams.add(new BasicNameValuePair("Submit", "Create User"));
+        UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formParams, Consts.UTF_8);
         HttpPost httppost = new HttpPost("http://localhost:8080/securityRealm/createAccountByAdmin");
         httppost.setEntity(entity);
 
         HttpResponse response = client.execute(httppost);
         System.out.println(response.getStatusLine().getStatusCode());
+    }
+
+    public String generateJenkinsUserAPIToken(String userName) throws IOException {
+        formParams.add(new BasicNameValuePair("newTokenName", ""));
+        UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formParams, Consts.UTF_8);
+        HttpPost httppost = new HttpPost("http://localhost:8080/user/"+userName+"/descriptorByName/jenkins.security.ApiTokenProperty/generateNewToken");
+        httppost.setEntity(entity);
+
+        HttpResponse response = client.execute(httppost);
+        System.out.println(response.getStatusLine().getStatusCode());
+
+        HttpEntity httpEntity = response.getEntity();
+        String responseString = EntityUtils.toString(httpEntity, "UTF-8");
+        System.out.println(responseString);
+        return responseString;
     }
 }

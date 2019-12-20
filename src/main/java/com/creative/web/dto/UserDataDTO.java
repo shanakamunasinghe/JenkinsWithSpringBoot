@@ -7,16 +7,16 @@ public class UserDataDTO {
     private String role;
     private String jenkinsName;
     private String jenkinsPassword;
-
+    private String jenkinsAPIToken;
 
     public UserDataDTO() {
     }
-    public UserDataDTO(String name, String role, String jenkinsName, String jenkinsPassword ){
+    public UserDataDTO(String name, String role, String jenkinsName, String jenkinsPassword ,String jenkinsAPIToken){
         this.name = name;
         this.role = role;
         this.jenkinsName = jenkinsName;
         this.jenkinsPassword = jenkinsPassword;
-
+        this.jenkinsAPIToken = jenkinsAPIToken;
     }
 
     public Integer getId() {
@@ -59,4 +59,11 @@ public class UserDataDTO {
         this.jenkinsPassword = jenkinsPassword;
     }
 
+    public String getJenkinsAPIToken() {
+        return jenkinsAPIToken;
+    }
+
+    public void setJenkinsAPIToken(String jenkinsAPIToken) {
+        this.jenkinsAPIToken = jenkinsAPIToken;
+    }
 }

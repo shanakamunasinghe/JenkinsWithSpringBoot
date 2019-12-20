@@ -15,6 +15,7 @@ public class UserData implements Serializable {
     private String role;
     private String jenkinsName;
     private String jenkinsPassword;
+    private String jenkinsAPIToken;
 
     @OneToMany(mappedBy = "user")
     Set<UsersProjectsData> usersProjectsData;
@@ -22,12 +23,12 @@ public class UserData implements Serializable {
 
     public UserData() {
     }
-    public UserData(String name, String role, String jenkinsName, String jenkinsPassword){
+    public UserData(String name, String role, String jenkinsName, String jenkinsPassword, String jenkinsAPIToken){
         this.name = name;
         this.role = role;
         this.jenkinsName = jenkinsName;
         this.jenkinsPassword = jenkinsPassword;
-
+        this.jenkinsAPIToken = jenkinsAPIToken;
     }
 
     public Integer getId() {
@@ -76,5 +77,13 @@ public class UserData implements Serializable {
 
     public void setUsersProjectsData(Set<UsersProjectsData> usersProjectsData) {
         this.usersProjectsData = usersProjectsData;
+    }
+
+    public String getJenkinsAPIToken() {
+        return jenkinsAPIToken;
+    }
+
+    public void setJenkinsAPIToken(String jenkinsAPIToken) {
+        this.jenkinsAPIToken = jenkinsAPIToken;
     }
 }

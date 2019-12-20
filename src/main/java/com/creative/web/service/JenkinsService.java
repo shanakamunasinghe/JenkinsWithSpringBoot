@@ -1,5 +1,6 @@
 package com.creative.web.service;
 
+import com.creative.web.dto.JenkinsUserDataDTO;
 import com.creative.web.util.JenkinsAPIManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ public class JenkinsService {
     public JenkinsAPIManager jenkinsAPIManager = new JenkinsAPIManager();
 
     public int runJenkinsJob() throws IOException {
-        jenkinsAPIManager.runJenkinsJob("helloWold");
+        jenkinsAPIManager.runJenkinsJob("HelloWorld");
         return 1;
     }
     public int deleteJenkinsUser() throws IOException {
@@ -23,7 +24,8 @@ public class JenkinsService {
         return 1;
     }
     public int createJenkinsUser() throws IOException {
-        jenkinsAPIManager.createJenkinsUser();
+        JenkinsUserDataDTO jenkinsUserDataDTO = new JenkinsUserDataDTO("isuru","password","isuru@gmail.com");
+        jenkinsAPIManager.createJenkinsUser(jenkinsUserDataDTO);
         return 1;
     }
 }
