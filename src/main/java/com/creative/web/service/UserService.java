@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,9 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private JenkinsService jenkinsService;
 
     public List<UserDataDTO> findALLUsers(){
         List<UserData> userList = userRepository.findAll();
@@ -44,14 +48,26 @@ public class UserService {
         return userDataDTO;
     }
 
-    public void createUser(UserDataDTO userDTO){
+    public void createUser(UserDataDTO userDTO) throws IOException {
         UserData user = new UserData();
         user.setName(userDTO.getName());
         user.setRole(userDTO.getRole());
         user.setJenkinsName(userDTO.getJenkinsName());
         user.setJenkinsPassword(userDTO.getJenkinsPassword());
+        jenkinsService.createJenkinsUser(userDTO);
+        String apiToken = jenkinsService.generateJenkinsUserAPIToken(userDTO.getName());
+        if(apiToken != null){
+            user.setJenkinsAPIToken(apiToken);
+        }
+        userRepository.save(user);
+
+    }
+    public void updateUser(UserDataDTO userDTO){
+        UserData user = new UserData();
+        user.setName(userDTO.getName());
         userRepository.save(user);
     }
+
 
     public void deleteUser(UserDataDTO userDTO){
         UserData user = new UserData();

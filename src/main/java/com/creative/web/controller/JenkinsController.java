@@ -1,13 +1,11 @@
 package com.creative.web.controller;
+import com.creative.web.dto.UserDataDTO;
 import com.creative.web.service.JenkinsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -21,8 +19,8 @@ public class JenkinsController {
     @RequestMapping(value = "/createJenkinsUser",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Integer> createJenkinsUser() throws IOException {
-        return new ResponseEntity<Integer>(jenkinsService.createJenkinsUser(), HttpStatus.OK);
+    public ResponseEntity<Integer> createJenkinsUser(@RequestBody UserDataDTO user) throws IOException {
+        return new ResponseEntity<Integer>(jenkinsService.createJenkinsUser(user), HttpStatus.OK);
     }
     @RequestMapping(value = "/deleteJenkinsUser",
             method = RequestMethod.DELETE,

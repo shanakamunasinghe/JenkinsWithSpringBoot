@@ -33,7 +33,7 @@ public class UserController {
     @RequestMapping(value = "/userData",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Integer> createUser(@RequestBody UserDataDTO user) {
+    public ResponseEntity<Integer> createUser(@RequestBody UserDataDTO user) throws IOException {
         userService.createUser(user);
         return new ResponseEntity<Integer>(01, HttpStatus.OK);
     }
@@ -41,8 +41,8 @@ public class UserController {
     @RequestMapping(value = "/userData",
             method = RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Integer> updateUserData(@RequestBody UserDataDTO user) {
-        userService.createUser(user);
+    public ResponseEntity<Integer> updateUserData(@RequestBody UserDataDTO user){
+        userService.updateUser(user);
         return new ResponseEntity<Integer>(user.getId(), HttpStatus.OK);
     }
 

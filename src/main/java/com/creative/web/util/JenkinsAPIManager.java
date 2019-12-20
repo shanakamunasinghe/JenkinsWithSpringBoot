@@ -1,6 +1,9 @@
 package com.creative.web.util;
 
 import com.creative.web.dto.JenkinsUserDataDTO;
+import com.creative.web.model.JenkinsAPITokenData;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
@@ -17,6 +20,7 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +30,7 @@ public class JenkinsAPIManager {
     CredentialsProvider provider = new BasicCredentialsProvider();
     HttpClient client;
     List<NameValuePair> formParams;
+    ObjectMapper objectMapper ;
 //    String jenkinsURL = "http://localhost:8080/";
 
     public JenkinsAPIManager(){
@@ -33,6 +38,7 @@ public class JenkinsAPIManager {
         UsernamePasswordCredentials credentials = new UsernamePasswordCredentials("admin", "11be180ad7282a21ca74bc2c589257e6dd");
         provider.setCredentials(AuthScope.ANY, credentials);
         client = HttpClientBuilder.create().setDefaultCredentialsProvider(provider).build();
+        objectMapper = new ObjectMapper();
     }
 
     public void getJenkinsStatusData() throws IOException {
@@ -106,8 +112,14 @@ public class JenkinsAPIManager {
         System.out.println(response.getStatusLine().getStatusCode());
 
         HttpEntity httpEntity = response.getEntity();
-        String responseString = EntityUtils.toString(httpEntity, "UTF-8");
-        System.out.println(responseString);
-        return responseString;
+        Gson g = new Gson();
+        //JenkinsAPITokenData myObject = g.fromJson(EntityUtils.toString(httpEntity, "UTF-8"),JenkinsAPITokenData.class);
+
+        JenkinsAPITokenData myObject = objectMapper.readValue(httpEntity.getContent(), JenkinsAPITokenData.class);
+        //String responseString = EntityUtils.toString(httpEntity, "UTF-8");
+        String res = myObject.getData().getTokenValue();
+        System.out.println("responseString  :"+res);
+//        System.out.println("res   "+res);
+        return res;
     }
 }
