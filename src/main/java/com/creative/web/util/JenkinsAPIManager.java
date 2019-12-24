@@ -112,14 +112,26 @@ public class JenkinsAPIManager {
         System.out.println(response.getStatusLine().getStatusCode());
 
         HttpEntity httpEntity = response.getEntity();
-        Gson g = new Gson();
-        //JenkinsAPITokenData myObject = g.fromJson(EntityUtils.toString(httpEntity, "UTF-8"),JenkinsAPITokenData.class);
-
         JenkinsAPITokenData myObject = objectMapper.readValue(httpEntity.getContent(), JenkinsAPITokenData.class);
-        //String responseString = EntityUtils.toString(httpEntity, "UTF-8");
         String res = myObject.getData().getTokenValue();
         System.out.println("responseString  :"+res);
-//        System.out.println("res   "+res);
         return res;
     }
+
+    public void createJenkinsRole(String roleName,String type) throws IOException {
+
+        formParams.add(new BasicNameValuePair("type", type));
+        formParams.add(new BasicNameValuePair("roleName", roleName));
+        UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formParams, Consts.UTF_8);
+        HttpPost httppost = new HttpPost("localhost:8080/role-strategy/strategy/addRole");
+        httppost.setEntity(entity);
+
+        HttpResponse response = client.execute(httppost);
+        System.out.println(response.getStatusLine().getStatusCode());
+    }
+
+    public void deleteJenkinsRole(String roleName,String type) throws IOException{
+
+    }
+
 }
