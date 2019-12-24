@@ -42,8 +42,6 @@ public class JenkinsAPIManager {
     }
 
     public void getJenkinsStatusData() throws IOException {
-
-
         HttpResponse response = client.execute(new HttpGet("http://localhost:8080/api/json?pretty=true"));
         System.out.println(response.getStatusLine().getStatusCode());
         HttpEntity entity = response.getEntity();
@@ -51,11 +49,8 @@ public class JenkinsAPIManager {
         // Read the contents of an entity and return it as a String.
         String content = EntityUtils.toString(entity);
         System.out.println(content);
-
     }
     public void runJenkinsJob(String job) throws IOException {
-
-
         HttpResponse response = client.execute(new HttpPost("http://localhost:8080/job/"+job+"/build?delay=0sec"));
         System.out.println(response.getStatusLine().getStatusCode());
     }
@@ -119,11 +114,13 @@ public class JenkinsAPIManager {
     }
 
     public void createJenkinsRole(String roleName,String type) throws IOException {
-
+        String permissionIds= "hudson.model.Item.Discover,hudson.model.Item.ExtendedRead";
         formParams.add(new BasicNameValuePair("type", type));
         formParams.add(new BasicNameValuePair("roleName", roleName));
+        formParams.add(new BasicNameValuePair("permissionIds", permissionIds));
+        formParams.add(new BasicNameValuePair("overwrite", "true"));
         UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formParams, Consts.UTF_8);
-        HttpPost httppost = new HttpPost("localhost:8080/role-strategy/strategy/addRole");
+        HttpPost httppost = new HttpPost("http://localhost:8080/role-strategy/strategy/addRole");
         httppost.setEntity(entity);
 
         HttpResponse response = client.execute(httppost);
@@ -131,7 +128,75 @@ public class JenkinsAPIManager {
     }
 
     public void deleteJenkinsRole(String roleName,String type) throws IOException{
+        formParams.add(new BasicNameValuePair("type", type));
+        formParams.add(new BasicNameValuePair("roleName", roleName));
+        UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formParams, Consts.UTF_8);
+        HttpPost httppost = new HttpPost("http://localhost:8080/role-strategy/strategy/removeRoles");
+        httppost.setEntity(entity);
 
+        HttpResponse response = client.execute(httppost);
+        System.out.println(response.getStatusLine().getStatusCode());
+    }
+
+    public void assignRole(String roleName,String type,String username) throws IOException {
+
+        formParams.add(new BasicNameValuePair("type", type));
+        formParams.add(new BasicNameValuePair("roleName", roleName));
+        formParams.add(new BasicNameValuePair("username", username));
+
+        UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formParams, Consts.UTF_8);
+        HttpPost httppost = new HttpPost("http://localhost:8080/role-strategy/strategy/assignRole");
+        httppost.setEntity(entity);
+
+        HttpResponse response = client.execute(httppost);
+        System.out.println(response.getStatusLine().getStatusCode());
+    }
+
+    public void deleteUserFromAllRoles(String roleName,String type,String username) throws IOException {
+
+        formParams.add(new BasicNameValuePair("type", type));
+        formParams.add(new BasicNameValuePair("roleName", roleName));
+        formParams.add(new BasicNameValuePair("username", username));
+
+        UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formParams, Consts.UTF_8);
+        HttpPost httppost = new HttpPost("http://localhost:8080/role-strategy/strategy/deleteSid");
+        httppost.setEntity(entity);
+
+        HttpResponse response = client.execute(httppost);
+        System.out.println(response.getStatusLine().getStatusCode());
+    }
+
+    public void unassignUserRole(String roleName,String type,String username) throws IOException {
+        formParams.add(new BasicNameValuePair("type", type));
+        formParams.add(new BasicNameValuePair("roleName", roleName));
+        formParams.add(new BasicNameValuePair("username", username));
+
+        UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formParams, Consts.UTF_8);
+        HttpPost httppost = new HttpPost("http://localhost:8080/role-strategy/strategy/unassignRole");
+        httppost.setEntity(entity);
+
+        HttpResponse response = client.execute(httppost);
+        System.out.println(response.getStatusLine().getStatusCode());
+    }
+
+    public void getAllRoles() throws IOException {
+        HttpResponse response = client.execute(new HttpGet("localhost:8080/role-strategy/strategy/getAllRoles"));
+        System.out.println(response.getStatusLine().getStatusCode());
+        HttpEntity entity = response.getEntity();
+
+        // Read the contents of an entity and return it as a String.
+        String content = EntityUtils.toString(entity);
+        System.out.println(content);
+    }
+
+    public void getParticularRoles(String type) throws IOException {
+        HttpResponse response = client.execute(new HttpGet("localhost:8080/role-strategy/strategy/getAllRoles?type="+type));
+        System.out.println(response.getStatusLine().getStatusCode());
+        HttpEntity entity = response.getEntity();
+
+        // Read the contents of an entity and return it as a String.
+        String content = EntityUtils.toString(entity);
+        System.out.println(content);
     }
 
 }
