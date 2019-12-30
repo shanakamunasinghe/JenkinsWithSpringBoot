@@ -12,9 +12,11 @@ import java.io.IOException;
 @Service
 public class JenkinsService {
     public JenkinsAPIManager jenkinsAPIManager = new JenkinsAPIManager();
+    public JenkinsCreateConfigFile jenkinsCreateConfigFile = new JenkinsCreateConfigFile();
 
     public int runJenkinsJob() throws IOException {
         jenkinsAPIManager.runJenkinsJob("HelloWorld");
+        jenkinsCreateConfigFile.createXML();
         return 1;
     }
     public int deleteJenkinsUser() throws IOException {
