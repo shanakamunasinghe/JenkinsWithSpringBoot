@@ -4,19 +4,20 @@ import com.creative.web.dto.JenkinsUserDataDTO;
 import com.creative.web.model.JenkinsAPITokenData;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
@@ -24,35 +25,40 @@ import org.apache.http.util.EntityUtils;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 
 public class JenkinsAPIManager {
     CredentialsProvider provider = new BasicCredentialsProvider();
-    HttpClient client;
+    CloseableHttpClient client;
     List<NameValuePair> formParams;
     ObjectMapper objectMapper ;
 //    String jenkinsURL = "http://localhost:8080/";
 
     public JenkinsAPIManager(){
         formParams = new ArrayList<NameValuePair>();
-        UsernamePasswordCredentials credentials = new UsernamePasswordCredentials("admin", "11be180ad7282a21ca74bc2c589257e6dd");
+        UsernamePasswordCredentials credentials = new UsernamePasswordCredentials("shanaka", "110e01148408450d02387432110acdb775");
         provider.setCredentials(AuthScope.ANY, credentials);
         client = HttpClientBuilder.create().setDefaultCredentialsProvider(provider).build();
         objectMapper = new ObjectMapper();
     }
 
     public void getJenkinsStatusData() throws IOException {
-        HttpResponse response = client.execute(new HttpGet("http://localhost:8080/api/json?pretty=true"));
+        CloseableHttpResponse response = client.execute(new HttpGet("http://localhost:8080/api/json?pretty=true"));
         System.out.println(response.getStatusLine().getStatusCode());
         HttpEntity entity = response.getEntity();
 
         // Read the contents of an entity and return it as a String.
         String content = EntityUtils.toString(entity);
         System.out.println(content);
+        response.close();
+        client.close();
     }
     public void runJenkinsJob(String job) throws IOException {
-        HttpResponse response = client.execute(new HttpPost("http://localhost:8080/job/"+job+"/build?delay=0sec"));
+        CloseableHttpResponse response = client.execute(new HttpPost("http://localhost:8080/job/"+job+"/build?delay=0sec"));
         System.out.println(response.getStatusLine().getStatusCode());
+        response.close();
+        client.close();
     }
 
     public void deleteJenkinsUser(String user) throws IOException {
@@ -63,8 +69,10 @@ public class JenkinsAPIManager {
         HttpPost httppost = new HttpPost("http://localhost:8080/securityRealm/user/"+user+"/doDelete");
         httppost.setEntity(entity);
 
-        HttpResponse response = client.execute(httppost);
+        CloseableHttpResponse response = client.execute(httppost);
         System.out.println(response.getStatusLine().getStatusCode());
+        response.close();
+        client.close();
     }
 
     public void createJenkinsUser(JenkinsUserDataDTO jenkinsUserDataDTO) throws IOException {
@@ -78,9 +86,13 @@ public class JenkinsAPIManager {
 
 // Create Inner JSON Object
         JsonObject json = new JsonObject();
-        json.addProperty("username", jenkinsUserDataDTO.getPassword());
+        json.addProperty("username", jenkinsUserDataDTO.getUserName());
         json.addProperty("password1", jenkinsUserDataDTO.getPassword());
-        json.addProperty("$redact", "[\"password1\",\"password2\"]");
+        String passwordLabels[] = {"password1","password2"};
+        JsonArray data = new JsonArray();
+        Stream.of(passwordLabels)
+                .forEach(data::add);
+        json.add("$redact", data);
         json.addProperty("password2", jenkinsUserDataDTO.getPassword());
         json.addProperty("fullname", jenkinsUserDataDTO.getUserName());
         json.addProperty("email", jenkinsUserDataDTO.getEmail());
@@ -93,8 +105,10 @@ public class JenkinsAPIManager {
         HttpPost httppost = new HttpPost("http://localhost:8080/securityRealm/createAccountByAdmin");
         httppost.setEntity(entity);
 
-        HttpResponse response = client.execute(httppost);
-        System.out.println(response.getStatusLine().getStatusCode());
+        CloseableHttpResponse response = client.execute(httppost);
+        System.out.println(response.getStatusLine());
+        response.close();
+        client.close();
     }
 
     public String generateJenkinsUserAPIToken(String userName) throws IOException {
@@ -103,13 +117,15 @@ public class JenkinsAPIManager {
         HttpPost httppost = new HttpPost("http://localhost:8080/user/"+userName+"/descriptorByName/jenkins.security.ApiTokenProperty/generateNewToken");
         httppost.setEntity(entity);
 
-        HttpResponse response = client.execute(httppost);
+        CloseableHttpResponse response = client.execute(httppost);
         System.out.println(response.getStatusLine().getStatusCode());
 
         HttpEntity httpEntity = response.getEntity();
         JenkinsAPITokenData myObject = objectMapper.readValue(httpEntity.getContent(), JenkinsAPITokenData.class);
         String res = myObject.getData().getTokenValue();
         System.out.println("responseString  :"+res);
+        response.close();
+        client.close();
         return res;
     }
 
@@ -123,8 +139,10 @@ public class JenkinsAPIManager {
         HttpPost httppost = new HttpPost("http://localhost:8080/role-strategy/strategy/addRole");
         httppost.setEntity(entity);
 
-        HttpResponse response = client.execute(httppost);
-        System.out.println(response.getStatusLine().getStatusCode());
+        CloseableHttpResponse response = client.execute(httppost);
+        System.out.println(response.getStatusLine());
+        response.close();
+        client.close();
     }
 
     public void deleteJenkinsRole(String roleName,String type) throws IOException{
@@ -134,8 +152,10 @@ public class JenkinsAPIManager {
         HttpPost httppost = new HttpPost("http://localhost:8080/role-strategy/strategy/removeRoles");
         httppost.setEntity(entity);
 
-        HttpResponse response = client.execute(httppost);
+        CloseableHttpResponse response = client.execute(httppost);
         System.out.println(response.getStatusLine().getStatusCode());
+        response.close();
+        client.close();
     }
 
     public void assignRole(String roleName,String type,String username) throws IOException {
@@ -148,8 +168,10 @@ public class JenkinsAPIManager {
         HttpPost httppost = new HttpPost("http://localhost:8080/role-strategy/strategy/assignRole");
         httppost.setEntity(entity);
 
-        HttpResponse response = client.execute(httppost);
+        CloseableHttpResponse response = client.execute(httppost);
         System.out.println(response.getStatusLine().getStatusCode());
+        response.close();
+        client.close();
     }
 
     public void deleteUserFromAllRoles(String roleName,String type,String username) throws IOException {
@@ -162,11 +184,13 @@ public class JenkinsAPIManager {
         HttpPost httppost = new HttpPost("http://localhost:8080/role-strategy/strategy/deleteSid");
         httppost.setEntity(entity);
 
-        HttpResponse response = client.execute(httppost);
+        CloseableHttpResponse response = client.execute(httppost);
         System.out.println(response.getStatusLine().getStatusCode());
+        response.close();
+        client.close();
     }
 
-    public void unassignUserRole(String roleName,String type,String username) throws IOException {
+    public void unassignedUserRole(String roleName,String type,String username) throws IOException {
         formParams.add(new BasicNameValuePair("type", type));
         formParams.add(new BasicNameValuePair("roleName", roleName));
         formParams.add(new BasicNameValuePair("username", username));
@@ -175,28 +199,34 @@ public class JenkinsAPIManager {
         HttpPost httppost = new HttpPost("http://localhost:8080/role-strategy/strategy/unassignRole");
         httppost.setEntity(entity);
 
-        HttpResponse response = client.execute(httppost);
+        CloseableHttpResponse response = client.execute(httppost);
         System.out.println(response.getStatusLine().getStatusCode());
+        response.close();
+        client.close();
     }
 
     public void getAllRoles() throws IOException {
-        HttpResponse response = client.execute(new HttpGet("localhost:8080/role-strategy/strategy/getAllRoles"));
+        CloseableHttpResponse response = client.execute(new HttpGet("localhost:8080/role-strategy/strategy/getAllRoles"));
         System.out.println(response.getStatusLine().getStatusCode());
         HttpEntity entity = response.getEntity();
 
         // Read the contents of an entity and return it as a String.
         String content = EntityUtils.toString(entity);
         System.out.println(content);
+        response.close();
+        client.close();
     }
 
     public void getParticularRoles(String type) throws IOException {
-        HttpResponse response = client.execute(new HttpGet("localhost:8080/role-strategy/strategy/getAllRoles?type="+type));
+        CloseableHttpResponse response = client.execute(new HttpGet("localhost:8080/role-strategy/strategy/getAllRoles?type="+type));
         System.out.println(response.getStatusLine().getStatusCode());
         HttpEntity entity = response.getEntity();
 
         // Read the contents of an entity and return it as a String.
         String content = EntityUtils.toString(entity);
         System.out.println(content);
+        response.close();
+        client.close();
     }
 
 }

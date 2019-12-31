@@ -11,28 +11,33 @@ import java.io.IOException;
 
 @Service
 public class JenkinsService {
-    public JenkinsAPIManager jenkinsAPIManager = new JenkinsAPIManager();
+
     public JenkinsCreateConfigFile jenkinsCreateConfigFile = new JenkinsCreateConfigFile();
 
     public int runJenkinsJob() throws IOException {
+        JenkinsAPIManager jenkinsAPIManager = new JenkinsAPIManager();
         jenkinsAPIManager.runJenkinsJob("HelloWorld");
         jenkinsCreateConfigFile.createXML();
         return 1;
     }
     public int deleteJenkinsUser() throws IOException {
+        JenkinsAPIManager jenkinsAPIManager = new JenkinsAPIManager();
         jenkinsAPIManager.deleteJenkinsUser("isuru");
         return 1;
     }
     public int getJenkinsStatus() throws IOException {
+        JenkinsAPIManager jenkinsAPIManager = new JenkinsAPIManager();
         jenkinsAPIManager.getJenkinsStatusData();
         return 1;
     }
     public int createJenkinsUser(UserDataDTO user) throws IOException {
-        JenkinsUserDataDTO jenkinsUserDataDTO = new JenkinsUserDataDTO(user.getName(),user.getJenkinsPassword(),"admin@gmail.com");
+        JenkinsAPIManager jenkinsAPIManager = new JenkinsAPIManager();
+        JenkinsUserDataDTO jenkinsUserDataDTO = new JenkinsUserDataDTO(user.getName(),user.getJenkinsPassword(),user.getName()+"@gmail.com");
         jenkinsAPIManager.createJenkinsUser(jenkinsUserDataDTO);
         return 1;
     }
     public String generateJenkinsUserAPIToken(String userName) throws IOException {
+        JenkinsAPIManager jenkinsAPIManager = new JenkinsAPIManager();
         String apiToken = jenkinsAPIManager.generateJenkinsUserAPIToken(userName);
         return apiToken;
     }
