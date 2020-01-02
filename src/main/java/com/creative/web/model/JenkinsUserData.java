@@ -6,7 +6,7 @@ import java.util.Set;
 
 @Entity
 @Table
-public class UserData implements Serializable {
+public class JenkinsUserData implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -18,12 +18,16 @@ public class UserData implements Serializable {
     private String jenkinsAPIToken;
 
     @OneToMany(mappedBy = "user")
-    Set<UsersProjectsData> usersProjectsData;
+    private Set<JenkinsUsersProjectsData> jenkinsUsersProjectsData;
+
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "employee_id")
+    private EmployeeData employeeData;
 
 
-    public UserData() {
+    public JenkinsUserData() {
     }
-    public UserData(String name, String role, String jenkinsName, String jenkinsPassword, String jenkinsAPIToken){
+    public JenkinsUserData(String name, String role, String jenkinsName, String jenkinsPassword, String jenkinsAPIToken){
         this.name = name;
         this.role = role;
         this.jenkinsName = jenkinsName;
@@ -71,12 +75,20 @@ public class UserData implements Serializable {
         this.jenkinsPassword = jenkinsPassword;
     }
 
-    public Set<UsersProjectsData> getUsersProjectsData() {
-        return usersProjectsData;
+    public Set<JenkinsUsersProjectsData> getJenkinsUsersProjectsData() {
+        return jenkinsUsersProjectsData;
     }
 
-    public void setUsersProjectsData(Set<UsersProjectsData> usersProjectsData) {
-        this.usersProjectsData = usersProjectsData;
+    public void setJenkinsUsersProjectsData(Set<JenkinsUsersProjectsData> jenkinsUsersProjectsData) {
+        this.jenkinsUsersProjectsData = jenkinsUsersProjectsData;
+    }
+
+    public EmployeeData getEmployeeData() {
+        return employeeData;
+    }
+
+    public void setEmployeeData(EmployeeData employeeData) {
+        this.employeeData = employeeData;
     }
 
     public String getJenkinsAPIToken() {

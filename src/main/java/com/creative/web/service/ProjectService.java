@@ -1,8 +1,8 @@
 package com.creative.web.service;
 
 import com.creative.web.dto.ProjectDataDTO;
-import com.creative.web.model.ProjectData;
-import com.creative.web.repository.ProjectRepository;
+import com.creative.web.model.JenkinsProjectData;
+import com.creative.web.repository.JenkinsProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,18 +12,18 @@ import java.util.List;
 @Service
 public class ProjectService {
     @Autowired
-    private ProjectRepository projectRepository;
+    private JenkinsProjectRepository jenkinsProjectRepository;
 
     public List<ProjectDataDTO> findALLUProjects(){
-        List<ProjectData> projectList = projectRepository.findAll();
+        List<JenkinsProjectData> projectList = jenkinsProjectRepository.findAll();
         List<ProjectDataDTO> projectDTOList = new ArrayList<>();
         if (projectList != null) {
-            for (ProjectData projectData : projectList) {
+            for (JenkinsProjectData jenkinsProjectData : projectList) {
                 ProjectDataDTO projectDTO = new ProjectDataDTO();
-                projectDTO.setId(projectData.getId());
-                projectDTO.setName(projectData.getName());
-                projectDTO.setCreateUser(projectData.getCreateUser());
-                projectDTO.setStatus(projectData.isStatus());
+                projectDTO.setId(jenkinsProjectData.getId());
+                projectDTO.setName(jenkinsProjectData.getName());
+                projectDTO.setCreateUser(jenkinsProjectData.getCreateUser());
+                projectDTO.setStatus(jenkinsProjectData.isStatus());
                 projectDTOList.add(projectDTO);
 
             }
@@ -32,27 +32,27 @@ public class ProjectService {
     }
 
     public ProjectDataDTO findById(Integer id){
-        ProjectData projectData =  projectRepository.getOne(id);
+        JenkinsProjectData jenkinsProjectData =  jenkinsProjectRepository.getOne(id);
         ProjectDataDTO projectDTO = new ProjectDataDTO();
-        projectDTO.setId(projectData.getId());
-        projectDTO.setName(projectData.getName());
-        projectDTO.setCreateUser(projectData.getCreateUser());
-        projectDTO.setStatus(projectData.isStatus());
+        projectDTO.setId(jenkinsProjectData.getId());
+        projectDTO.setName(jenkinsProjectData.getName());
+        projectDTO.setCreateUser(jenkinsProjectData.getCreateUser());
+        projectDTO.setStatus(jenkinsProjectData.isStatus());
         return projectDTO;
 
     }
 
     public void createProject(ProjectDataDTO projectDTO){
 
-        ProjectData project = new ProjectData();
+        JenkinsProjectData project = new JenkinsProjectData();
         project.setName(projectDTO.getName());
         project.setCreateUser(projectDTO.getCreateUser());
         project.setStatus(projectDTO.isStatus());
-        projectRepository.save(project);
+        jenkinsProjectRepository.save(project);
     }
 
     public void deleteProject(ProjectDataDTO projectDTO){
-        ProjectData project = new ProjectData();
-        projectRepository.delete(project);
+        JenkinsProjectData project = new JenkinsProjectData();
+        jenkinsProjectRepository.delete(project);
     }
 }

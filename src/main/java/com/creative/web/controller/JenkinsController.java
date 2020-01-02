@@ -1,5 +1,6 @@
 package com.creative.web.controller;
 import com.creative.web.dto.UserDataDTO;
+import com.creative.web.model.JenkinsJobData;
 import com.creative.web.service.JenkinsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,7 @@ public class JenkinsController {
 
     @RequestMapping(value = "/createJenkinsUser",
             method = RequestMethod.POST,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Integer> createJenkinsUser(@RequestBody UserDataDTO user) throws IOException {
         return new ResponseEntity<Integer>(jenkinsService.createJenkinsUser(user), HttpStatus.OK);
     }
@@ -31,7 +32,7 @@ public class JenkinsController {
 
     @RequestMapping(value = "/runJenkinsJob",
             method = RequestMethod.POST,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Integer> runJenkinsJob() throws IOException {
         return new ResponseEntity<Integer>(jenkinsService.runJenkinsJob(), HttpStatus.OK);
     }
@@ -40,5 +41,12 @@ public class JenkinsController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Integer> getJenkinsStatus() throws IOException {
         return new ResponseEntity<Integer>(jenkinsService.getJenkinsStatus(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/createJenkinsJob",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Integer> createJenkinsJob(@RequestBody JenkinsJobData jobName) throws IOException {
+        return new ResponseEntity<Integer>(jenkinsService.createJenkinsJob(jobName.getJobName()), HttpStatus.OK);
     }
 }

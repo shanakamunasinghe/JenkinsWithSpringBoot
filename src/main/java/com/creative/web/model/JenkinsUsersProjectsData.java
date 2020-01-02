@@ -6,24 +6,24 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class UsersProjectsData {
+public class JenkinsUsersProjectsData {
     @Id
     private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "project_id")
-    private ProjectData project;
+    private JenkinsProjectData project;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserData user;
+    private JenkinsUserData user;
 
     private Integer assignedUserId;
 
-    public UsersProjectsData() {
+    public JenkinsUsersProjectsData() {
     }
 
-    public UsersProjectsData(Integer id, ProjectData project, UserData user, Integer assignedUserId) {
+    public JenkinsUsersProjectsData(Integer id, JenkinsProjectData project, JenkinsUserData user, Integer assignedUserId) {
         this.id = id;
         this.project = project;
         this.user = user;
@@ -38,19 +38,19 @@ public class UsersProjectsData {
         this.id = id;
     }
 
-    public ProjectData getProject() {
+    public JenkinsProjectData getProject() {
         return project;
     }
 
-    public void setProject(ProjectData project) {
+    public void setProject(JenkinsProjectData project) {
         this.project = project;
     }
 
-    public UserData getUser() {
+    public JenkinsUserData getUser() {
         return user;
     }
 
-    public void setUser(UserData user) {
+    public void setUser(JenkinsUserData user) {
         this.user = user;
     }
 

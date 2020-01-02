@@ -2,8 +2,8 @@ package com.creative.web.util;
 
 import com.creative.web.dto.JenkinsUserDataDTO;
 import com.creative.web.model.JenkinsAPITokenData;
+import com.creative.web.service.JenkinsCreateConfigFile;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.http.Consts;
@@ -16,6 +16,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -33,6 +34,7 @@ public class JenkinsAPIManager {
     CloseableHttpClient client;
     List<NameValuePair> formParams;
     ObjectMapper objectMapper ;
+    JenkinsCreateConfigFile jenkinsCreateConfigFile = new JenkinsCreateConfigFile();
 //    String jenkinsURL = "http://localhost:8080/";
 
     public JenkinsAPIManager(){
@@ -219,6 +221,30 @@ public class JenkinsAPIManager {
 
     public void getParticularRoles(String type) throws IOException {
         CloseableHttpResponse response = client.execute(new HttpGet("localhost:8080/role-strategy/strategy/getAllRoles?type="+type));
+        System.out.println(response.getStatusLine().getStatusCode());
+        HttpEntity entity = response.getEntity();
+
+        // Read the contents of an entity and return it as a String.
+        String content = EntityUtils.toString(entity);
+        System.out.println(content);
+        response.close();
+        client.close();
+    }
+
+
+
+    public void createJenkinsJob(String jobName) throws IOException {
+//        curl -s -XPOST 'http://example.com/createItem?name=yourJobName' -u username:API_TOKEN --data-binary @mylocalconfig.xml -H "Content-Type:text/xml"
+        //Define a postRequest request
+        HttpPost postRequest = new HttpPost("http://localhost:8080/createItem?name="+jobName);
+        String file = jenkinsCreateConfigFile.createXML();
+        //Set the API media type in http content-type header
+        postRequest.addHeader("content-type", "application/xml");
+
+        //Set the request post body
+        StringEntity userEntity = new StringEntity(file);
+        postRequest.setEntity(userEntity);
+        CloseableHttpResponse response = client.execute(postRequest);
         System.out.println(response.getStatusLine().getStatusCode());
         HttpEntity entity = response.getEntity();
 

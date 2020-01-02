@@ -4,7 +4,8 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-public class ProjectData {
+@Table
+public class JenkinsProjectData {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -13,12 +14,12 @@ public class ProjectData {
     private String createUser;
     private boolean status;
     @OneToMany(mappedBy = "project")
-    Set<UsersProjectsData> usersProjectsData;
+    Set<JenkinsUsersProjectsData> jenkinsUsersProjectsData;
 
-    public ProjectData() {
+    public JenkinsProjectData() {
     }
 
-    public ProjectData(String name,String createUser,boolean status) {
+    public JenkinsProjectData(String name, String createUser, boolean status) {
         this.name = name;
         this.createUser = createUser;
         this.status = status;
@@ -56,11 +57,11 @@ public class ProjectData {
         this.status = status;
     }
 
-    public Set<UsersProjectsData> getUsersProjectsData() {
-        return usersProjectsData;
+    public Set<JenkinsUsersProjectsData> getJenkinsUsersProjectsData() {
+        return jenkinsUsersProjectsData;
     }
 
-    public void setUsersProjectsData(Set<UsersProjectsData> usersProjectsData) {
-        this.usersProjectsData = usersProjectsData;
+    public void setJenkinsUsersProjectsData(Set<JenkinsUsersProjectsData> jenkinsUsersProjectsData) {
+        this.jenkinsUsersProjectsData = jenkinsUsersProjectsData;
     }
 }

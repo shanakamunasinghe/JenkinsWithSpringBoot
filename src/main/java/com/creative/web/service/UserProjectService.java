@@ -1,7 +1,7 @@
 package com.creative.web.service;
 
 import com.creative.web.dto.UsersProjectsDataDTO;
-import com.creative.web.model.UsersProjectsData;
+import com.creative.web.model.JenkinsUsersProjectsData;
 import com.creative.web.repository.UserProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,10 +15,10 @@ public class UserProjectService {
     private UserProjectRepository userProjectRepository;
 
     public List<UsersProjectsDataDTO> findALLUsersProjects(){
-        List<UsersProjectsData> usersProjectsData = userProjectRepository.findAll();
+        List<JenkinsUsersProjectsData> jenkinsUsersProjectsData = userProjectRepository.findAll();
         List<UsersProjectsDataDTO> usersProjectsDataDTOS = new ArrayList<>();
-        if (usersProjectsData != null) {
-            for(UsersProjectsData userProject : usersProjectsData){
+        if (jenkinsUsersProjectsData != null) {
+            for(JenkinsUsersProjectsData userProject : jenkinsUsersProjectsData){
                 UsersProjectsDataDTO usersProjectsDataDTO = new UsersProjectsDataDTO();
                 usersProjectsDataDTO.setId(userProject.getId());
                 usersProjectsDataDTO.setProject(userProject.getProject());
@@ -30,7 +30,7 @@ public class UserProjectService {
         return usersProjectsDataDTOS;
     }
     public UsersProjectsDataDTO findById(Integer id){
-        UsersProjectsData userProject = userProjectRepository.getOne(id);
+        JenkinsUsersProjectsData userProject = userProjectRepository.getOne(id);
         UsersProjectsDataDTO usersProjectsDataDTO = new UsersProjectsDataDTO();
         usersProjectsDataDTO.setId(userProject.getId());
         usersProjectsDataDTO.setProject(userProject.getProject());
@@ -40,7 +40,7 @@ public class UserProjectService {
     }
 
     public void createUserProject(UsersProjectsDataDTO usersProjectsDataDTO){
-        UsersProjectsData userProject = new UsersProjectsData();
+        JenkinsUsersProjectsData userProject = new JenkinsUsersProjectsData();
         userProject.setId(usersProjectsDataDTO.getId());
         userProject.setProject(usersProjectsDataDTO.getProject());
         userProject.setUser(usersProjectsDataDTO.getUser());
@@ -49,7 +49,7 @@ public class UserProjectService {
     }
 
     public void deleteUserProject(UsersProjectsDataDTO usersProjectsDataDTO){
-        UsersProjectsData userProject = new UsersProjectsData();
+        JenkinsUsersProjectsData userProject = new JenkinsUsersProjectsData();
         userProject.setId(usersProjectsDataDTO.getId());
         userProject.setProject(usersProjectsDataDTO.getProject());
         userProject.setUser(usersProjectsDataDTO.getUser());

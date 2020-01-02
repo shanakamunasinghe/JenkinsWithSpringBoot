@@ -1,12 +1,8 @@
 package com.creative.web.service;
-
 import com.creative.web.dto.JenkinsUserDataDTO;
 import com.creative.web.dto.UserDataDTO;
 import com.creative.web.util.JenkinsAPIManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import java.io.IOException;
 
 @Service
@@ -40,6 +36,12 @@ public class JenkinsService {
         JenkinsAPIManager jenkinsAPIManager = new JenkinsAPIManager();
         String apiToken = jenkinsAPIManager.generateJenkinsUserAPIToken(userName);
         return apiToken;
+    }
+
+    public Integer createJenkinsJob(String jobName) throws IOException {
+        JenkinsAPIManager jenkinsAPIManager = new JenkinsAPIManager();
+        jenkinsAPIManager.createJenkinsJob(jobName);
+        return 1;
     }
 
 }

@@ -4,20 +4,21 @@ import javax.persistence.*;
 
 @Entity
 @Table
-public class VersionControllerData {
-
+public class EmployeeData {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
-    private boolean valid;
+    private String Status;
 
-    public VersionControllerData() {
+
+    public EmployeeData() {
     }
 
-    public VersionControllerData(String name,boolean valid) {
+    public EmployeeData(Integer id, String name, String status) {
+        this.id = id;
         this.name = name;
-        this.valid = valid;
+        Status = status;
     }
 
     public Integer getId() {
@@ -36,11 +37,11 @@ public class VersionControllerData {
         this.name = name;
     }
 
-    public boolean isValid() {
-        return valid;
+    public String getStatus() {
+        return Status;
     }
 
-    public void setValid(boolean valid) {
-        this.valid = valid;
+    public void setStatus(String status) {
+        Status = status;
     }
 }
