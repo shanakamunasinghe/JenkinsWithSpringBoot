@@ -1,17 +1,17 @@
 package com.creative.web.model;
 
-public class JenkinsSCMData {
+public class JenkinsJobXMLSCMData {
     private String userRemoteConfigUrl;
-    private String name;
-    private String[] branches;
-    private boolean doGenerateSubmoduleConfigurations;
+    private String status;
+    private String branches;
+    private String doGenerateSubmoduleConfigurations;
 
-    public JenkinsSCMData() {
+    public JenkinsJobXMLSCMData() {
     }
 
-    public JenkinsSCMData(String userRemoteConfigUrl, String name, String[] branches, boolean doGenerateSubmoduleConfigurations) {
+    public JenkinsJobXMLSCMData(String userRemoteConfigUrl, String status, String branches, String doGenerateSubmoduleConfigurations) {
         this.userRemoteConfigUrl = userRemoteConfigUrl;
-        this.name = name;
+        this.status = status;
         this.branches = branches;
         this.doGenerateSubmoduleConfigurations = doGenerateSubmoduleConfigurations;
     }
@@ -24,27 +24,27 @@ public class JenkinsSCMData {
         this.userRemoteConfigUrl = userRemoteConfigUrl;
     }
 
-    public String getName() {
-        return name;
+    public String getStatus() {
+        return status;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public String[] getBranches() {
+    public String getBranches() {
         return branches;
     }
 
-    public void setBranches(String[] branches) {
+    public void setBranches(String branches) {
         this.branches = branches;
     }
 
-    public boolean isDoGenerateSubmoduleConfigurations() {
+    public String getDoGenerateSubmoduleConfigurations() {
         return doGenerateSubmoduleConfigurations;
     }
 
-    public void setDoGenerateSubmoduleConfigurations(boolean doGenerateSubmoduleConfigurations) {
+    public void setDoGenerateSubmoduleConfigurations(String doGenerateSubmoduleConfigurations) {
         this.doGenerateSubmoduleConfigurations = doGenerateSubmoduleConfigurations;
     }
 }

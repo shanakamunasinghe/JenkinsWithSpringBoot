@@ -49,4 +49,7 @@ public class JenkinsController {
     public ResponseEntity<Integer> createJenkinsJob(@RequestBody JenkinsJobData jobName) throws IOException {
         return new ResponseEntity<Integer>(jenkinsService.createJenkinsJob(jobName.getJobName()), HttpStatus.OK);
     }
+
+
+
 }

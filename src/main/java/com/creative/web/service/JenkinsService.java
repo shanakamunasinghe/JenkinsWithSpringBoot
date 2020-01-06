@@ -13,7 +13,6 @@ public class JenkinsService {
     public int runJenkinsJob() throws IOException {
         JenkinsAPIManager jenkinsAPIManager = new JenkinsAPIManager();
         jenkinsAPIManager.runJenkinsJob("HelloWorld");
-        jenkinsCreateConfigFile.createXML();
         return 1;
     }
     public int deleteJenkinsUser() throws IOException {

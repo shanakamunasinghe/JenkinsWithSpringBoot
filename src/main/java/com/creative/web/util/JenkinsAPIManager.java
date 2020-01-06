@@ -1,7 +1,7 @@
 package com.creative.web.util;
 
 import com.creative.web.dto.JenkinsUserDataDTO;
-import com.creative.web.model.JenkinsAPITokenData;
+import com.creative.web.model.*;
 import com.creative.web.service.JenkinsCreateConfigFile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonArray;
@@ -234,10 +234,27 @@ public class JenkinsAPIManager {
 
 
     public void createJenkinsJob(String jobName) throws IOException {
-//        curl -s -XPOST 'http://example.com/createItem?name=yourJobName' -u username:API_TOKEN --data-binary @mylocalconfig.xml -H "Content-Type:text/xml"
         //Define a postRequest request
         HttpPost postRequest = new HttpPost("http://localhost:8080/createItem?name="+jobName);
-        String file = jenkinsCreateConfigFile.createXML();
+        JenkinsJobXMLData jenkinsJobXMLData = new JenkinsJobXMLData();
+        // --- make 6 times -------------
+        JenkinsJobXMLPropertiesData jenkinsJobXMLPropertiesData = new JenkinsJobXMLPropertiesData();
+        JenkinsJobXMLBuilderData jenkinsJobXMLBuilderData = new JenkinsJobXMLBuilderData();
+        JenkinsJobXMLBuilderWrapperData jenkinsJobXMLBuilderWrapperData = new JenkinsJobXMLBuilderWrapperData();
+        JenkinsJobXMLSCMData jenkinsJobXMLSCMData = new JenkinsJobXMLSCMData();
+        JenkinsJobXMLPublisherData jenkinsJobXMLPublisherData = new JenkinsJobXMLPublisherData();
+        JenkinsJobXMLTiggersData jenkinsJobXMLTiggersData = new JenkinsJobXMLTiggersData();
+
+
+        jenkinsJobXMLData.setJenkinsJobXMLPropertiesData(jenkinsJobXMLPropertiesData);
+        jenkinsJobXMLData.setJenkinsJobXMLBuilderData(jenkinsJobXMLBuilderData);
+        jenkinsJobXMLData.setJenkinsJobXMLBuilderWrapperData(jenkinsJobXMLBuilderWrapperData);
+        jenkinsJobXMLData.setJenkinsJobXMLSCMData(jenkinsJobXMLSCMData);
+        jenkinsJobXMLData.setJenkinsJobXMLPublisherData(jenkinsJobXMLPublisherData);
+        jenkinsJobXMLData.setJenkinsJobXMLTiggersData(jenkinsJobXMLTiggersData);
+
+
+        String file = jenkinsCreateConfigFile.createXML(jenkinsJobXMLData);
         //Set the API media type in http content-type header
         postRequest.addHeader("content-type", "application/xml");
 
