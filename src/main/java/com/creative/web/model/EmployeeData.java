@@ -1,6 +1,10 @@
 package com.creative.web.model;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table
@@ -11,6 +15,11 @@ public class EmployeeData {
     private String name;
     private String Status;
 
+    @CreationTimestamp
+    private Date created;
+
+    @UpdateTimestamp
+    private Date modified;
 
     public EmployeeData() {
     }

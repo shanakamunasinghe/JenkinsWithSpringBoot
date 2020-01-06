@@ -1,5 +1,6 @@
 package com.creative.web.controller;
 
+import com.creative.web.dto.JenkinsJobHistoryDTO;
 import com.creative.web.dto.JenkinsNotificationDTO;
 import com.creative.web.model.JenkinsJobHistoryData;
 import com.creative.web.service.JenkinsNotificationService;
@@ -34,14 +35,14 @@ public class JenkinsNotificationController {
     @RequestMapping(value = "/getJenkinsJobHistory",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<JenkinsJobHistoryData>> getJenkinsJobHistory(@RequestBody String jobName) throws IOException {
-        return new ResponseEntity<List<JenkinsJobHistoryData>>(jenkinsNotificationService.getJenkinsJobHistory(jobName), HttpStatus.OK);
+    public ResponseEntity<List<JenkinsJobHistoryDTO>> getJenkinsJobHistory(@RequestBody String jobName) throws IOException {
+        return new ResponseEntity<List<JenkinsJobHistoryDTO>>(jenkinsNotificationService.getJenkinsJobHistory(jobName), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/getAllJenkinsJobHistory",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<JenkinsJobHistoryData>> getAllJenkinsJobHistory() throws IOException {
-        return new ResponseEntity<List<JenkinsJobHistoryData>>(jenkinsNotificationService.getAllJenkinsJobHistory(), HttpStatus.OK);
+    public ResponseEntity<List<JenkinsJobHistoryDTO>> getAllJenkinsJobHistory() throws IOException {
+        return new ResponseEntity<List<JenkinsJobHistoryDTO>>(jenkinsNotificationService.getAllJenkinsJobHistory(), HttpStatus.OK);
     }
 }

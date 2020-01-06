@@ -1,6 +1,9 @@
 package com.creative.web.model;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table
@@ -13,6 +16,8 @@ public class JenkinsJobHistoryData {
     private JenkinsJobData jenkinsJob;
     private String phase;
     private String status;
+    @CreationTimestamp
+    private Date created;
 
     public JenkinsJobHistoryData() {
 
@@ -22,6 +27,14 @@ public class JenkinsJobHistoryData {
         this.jenkinsJob = jenkinsJob;
         this.phase = phase;
         this.status = status;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
     }
 
     public JenkinsJobData getJenkinsJob() {

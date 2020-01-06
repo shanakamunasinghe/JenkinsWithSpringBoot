@@ -1,21 +1,25 @@
 package com.creative.web.dto;
 
+import java.util.Date;
+
 public class JenkinsJobHistoryDTO {
     private Integer id;
     private Integer jobId;
     private String jobName;
     private String phase;
     private String status;
+    private Date created;
 
     public JenkinsJobHistoryDTO() {
     }
 
-    public JenkinsJobHistoryDTO(Integer id, Integer jobId, String jobName, String phase, String status) {
+    public JenkinsJobHistoryDTO(Integer id, Integer jobId, String jobName, String phase, String status, Date created) {
         this.id = id;
         this.jobId = jobId;
         this.jobName = jobName;
         this.phase = phase;
         this.status = status;
+        this.created = created;
     }
 
     public Integer getId() {
@@ -56,5 +60,13 @@ public class JenkinsJobHistoryDTO {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
     }
 }
