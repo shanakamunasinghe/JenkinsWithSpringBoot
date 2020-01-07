@@ -13,7 +13,8 @@ public class EmployeeData {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
-    private String Status;
+    private String status;
+    private String role;
 
     @CreationTimestamp
     private Date created;
@@ -24,10 +25,11 @@ public class EmployeeData {
     public EmployeeData() {
     }
 
-    public EmployeeData(Integer id, String name, String status) {
+    public EmployeeData(Integer id, String name, String status, String role) {
         this.id = id;
         this.name = name;
-        Status = status;
+        this.status = status;
+        this.role = role;
     }
 
     public Integer getId() {
@@ -47,10 +49,34 @@ public class EmployeeData {
     }
 
     public String getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(String status) {
-        Status = status;
+        this.status = status;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getModified() {
+        return modified;
+    }
+
+    public void setModified(Date modified) {
+        this.modified = modified;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

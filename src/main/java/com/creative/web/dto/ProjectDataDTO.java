@@ -1,19 +1,23 @@
 package com.creative.web.dto;
 
+import com.creative.web.model.AutomationToolData;
+
 public class ProjectDataDTO {
     private Integer id;
 
     private String name;
-    private String createUser;
+    private Integer createUserId;
     private boolean status;
+    private AutomationToolData automationToolData;
 
     public ProjectDataDTO() {
     }
 
-    public ProjectDataDTO(String name,String createUser,boolean status) {
+    public ProjectDataDTO(String name, Integer createUserId, boolean status, AutomationToolData automationToolId) {
         this.name = name;
-        this.createUser = createUser;
+        this.createUserId = createUserId;
         this.status = status;
+        this.automationToolData = automationToolId;
     }
 
     public Integer getId() {
@@ -32,12 +36,12 @@ public class ProjectDataDTO {
         this.name = name;
     }
 
-    public String getCreateUser() {
-        return createUser;
+    public Integer getCreateUserId() {
+        return createUserId;
     }
 
-    public void setCreateUser(String createUser) {
-        this.createUser = createUser;
+    public void setCreateUserId(Integer createUserId) {
+        this.createUserId = createUserId;
     }
 
     public boolean isStatus() {
@@ -46,5 +50,13 @@ public class ProjectDataDTO {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public AutomationToolData getAutomationToolData() {
+        return automationToolData;
+    }
+
+    public void setAutomationToolData(AutomationToolData automationToolData) {
+        this.automationToolData = automationToolData;
     }
 }

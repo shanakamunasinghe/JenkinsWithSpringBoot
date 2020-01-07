@@ -15,7 +15,11 @@ import java.io.IOException;
 @CrossOrigin
 public class JenkinsController {
     @Autowired
-    public JenkinsService jenkinsService;
+    public final JenkinsService jenkinsService;
+
+    public JenkinsController(JenkinsService jenkinsService) {
+        this.jenkinsService = jenkinsService;
+    }
 
     @RequestMapping(value = "/createJenkinsUser",
             method = RequestMethod.POST,
@@ -49,6 +53,7 @@ public class JenkinsController {
     public ResponseEntity<Integer> createJenkinsJob(@RequestBody JenkinsJobData jobName) throws IOException {
         return new ResponseEntity<Integer>(jenkinsService.createJenkinsJob(jobName.getJobName()), HttpStatus.OK);
     }
+
 
 
 

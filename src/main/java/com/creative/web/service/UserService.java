@@ -27,7 +27,6 @@ public class UserService {
                 UserDataDTO userDataDTO = new UserDataDTO();
                 userDataDTO.setId(user.getId());
                 userDataDTO.setName(user.getName());
-                userDataDTO.setRole(user.getRole());
                 userDataDTO.setJenkinsName(user.getJenkinsName());
                 userDataDTO.setJenkinsPassword(user.getJenkinsPassword());
                 userDTOList.add(userDataDTO);
@@ -42,7 +41,6 @@ public class UserService {
         UserDataDTO userDataDTO = new UserDataDTO();
         userDataDTO.setId(user.getId());
         userDataDTO.setName(user.getName());
-        userDataDTO.setRole(user.getRole());
         userDataDTO.setJenkinsName(user.getJenkinsName());
         userDataDTO.setJenkinsPassword(user.getJenkinsPassword());
         return userDataDTO;
@@ -51,7 +49,6 @@ public class UserService {
     public void createUser(UserDataDTO userDTO) throws IOException {
         JenkinsUserData user = new JenkinsUserData();
         user.setName(userDTO.getName());
-        user.setRole(userDTO.getRole());
         user.setJenkinsName(userDTO.getJenkinsName());
         user.setJenkinsPassword(userDTO.getJenkinsPassword());
         jenkinsService.createJenkinsUser(userDTO);
@@ -72,7 +69,6 @@ public class UserService {
     public void deleteUser(UserDataDTO userDTO){
         JenkinsUserData user = new JenkinsUserData();
         user.setName(userDTO.getName());
-        user.setRole(userDTO.getRole());
         user.setJenkinsName(userDTO.getJenkinsName());
         user.setJenkinsPassword(userDTO.getJenkinsPassword());
         jenkinsUserRepository.delete(user);

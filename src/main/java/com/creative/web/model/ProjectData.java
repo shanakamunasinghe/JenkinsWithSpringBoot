@@ -5,24 +5,33 @@ import java.util.Set;
 
 @Entity
 @Table
-public class JenkinsProjectData {
+public class ProjectData {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String name;
-    private String createUser;
+    private Integer createUserId;
     private boolean status;
+
+    @OneToOne(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    @JoinColumn(name = "automation_tool_data_id",
+            unique = true,
+            nullable = true)
+    private AutomationToolData automationToolData;
+
     @OneToMany(mappedBy = "project")
     Set<JenkinsUsersProjectsData> jenkinsUsersProjectsData;
 
-    public JenkinsProjectData() {
+    public ProjectData() {
     }
 
-    public JenkinsProjectData(String name, String createUser, boolean status) {
+    public ProjectData(String name, Integer createUserId, boolean status, AutomationToolData automationToolData) {
         this.name = name;
-        this.createUser = createUser;
+        this.createUserId = createUserId;
         this.status = status;
+        this.automationToolData = automationToolData;
     }
 
     public Integer getId() {
@@ -41,12 +50,12 @@ public class JenkinsProjectData {
         this.name = name;
     }
 
-    public String getCreateUser() {
-        return createUser;
+    public Integer getCreateUserId() {
+        return createUserId;
     }
 
-    public void setCreateUser(String createUser) {
-        this.createUser = createUser;
+    public void setCreateUserId(Integer createUser) {
+        this.createUserId = createUser;
     }
 
     public boolean isStatus() {
@@ -63,5 +72,13 @@ public class JenkinsProjectData {
 
     public void setJenkinsUsersProjectsData(Set<JenkinsUsersProjectsData> jenkinsUsersProjectsData) {
         this.jenkinsUsersProjectsData = jenkinsUsersProjectsData;
+    }
+
+    public AutomationToolData getAutomationToolData() {
+        return automationToolData;
+    }
+
+    public void setAutomationToolData(AutomationToolData automationToolData) {
+        this.automationToolData = automationToolData;
     }
 }

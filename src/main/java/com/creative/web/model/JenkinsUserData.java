@@ -12,7 +12,6 @@ public class JenkinsUserData implements Serializable {
     private Integer id;
 
     private String name;
-    private String role;
     private String jenkinsName;
     private String jenkinsPassword;
     private String jenkinsAPIToken;
@@ -20,16 +19,19 @@ public class JenkinsUserData implements Serializable {
     @OneToMany(mappedBy = "user")
     private Set<JenkinsUsersProjectsData> jenkinsUsersProjectsData;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "employee_id")
+    @OneToOne(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id",
+            unique = true,
+            nullable = true)
     private EmployeeData employeeData;
 
 
     public JenkinsUserData() {
     }
-    public JenkinsUserData(String name, String role, String jenkinsName, String jenkinsPassword, String jenkinsAPIToken){
+
+    public JenkinsUserData(String name, String jenkinsName, String jenkinsPassword, String jenkinsAPIToken) {
         this.name = name;
-        this.role = role;
         this.jenkinsName = jenkinsName;
         this.jenkinsPassword = jenkinsPassword;
         this.jenkinsAPIToken = jenkinsAPIToken;
@@ -49,14 +51,6 @@ public class JenkinsUserData implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 
     public String getJenkinsName() {

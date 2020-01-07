@@ -8,19 +8,20 @@ import javax.persistence.*;
 
 @Entity
 @Table
-public class JenkinsItemRoleData {
+public class JenkinsItemRoleData extends JenkinsRolesOptionData {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String name;
+    private String pattern;
     private String status;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "project_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    private JenkinsProjectData jenkinsProjectData;
+    private ProjectData projectData;
 
     public JenkinsItemRoleData() {
     }
@@ -49,11 +50,19 @@ public class JenkinsItemRoleData {
         this.status = status;
     }
 
-    public JenkinsProjectData getJenkinsProjectData() {
-        return jenkinsProjectData;
+    public ProjectData getProjectData() {
+        return projectData;
     }
 
-    public void setJenkinsProjectData(JenkinsProjectData jenkinsProjectData) {
-        this.jenkinsProjectData = jenkinsProjectData;
+    public void setProjectData(ProjectData projectData) {
+        this.projectData = projectData;
+    }
+
+    public String getPattern() {
+        return pattern;
+    }
+
+    public void setPattern(String pattern) {
+        this.pattern = pattern;
     }
 }

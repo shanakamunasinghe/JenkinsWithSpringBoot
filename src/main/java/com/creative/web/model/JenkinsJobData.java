@@ -1,9 +1,5 @@
 package com.creative.web.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 
 @Entity
@@ -16,9 +12,7 @@ public class JenkinsJobData {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "project_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private JenkinsProjectData jenkinsProjectData;
+    private ProjectData projectData;
 
     private String description;
     private String status;
@@ -56,12 +50,12 @@ public class JenkinsJobData {
         this.id = id;
     }
 
-    public JenkinsProjectData getJenkinsProjectData() {
-        return jenkinsProjectData;
+    public ProjectData getProjectData() {
+        return projectData;
     }
 
-    public void setJenkinsProjectData(JenkinsProjectData jenkinsProjectData) {
-        this.jenkinsProjectData = jenkinsProjectData;
+    public void setProjectData(ProjectData projectData) {
+        this.projectData = projectData;
     }
 
     public String getDescription() {

@@ -4,6 +4,8 @@ import com.creative.web.dto.UserDataDTO;
 import com.creative.web.util.JenkinsAPIManager;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class JenkinsService {
@@ -40,6 +42,19 @@ public class JenkinsService {
     public Integer createJenkinsJob(String jobName) throws IOException {
         JenkinsAPIManager jenkinsAPIManager = new JenkinsAPIManager();
         jenkinsAPIManager.createJenkinsJob(jobName);
+        return 1;
+    }
+
+    // have to create
+    public List<String> getAllRolesByType(String type) throws IOException {
+//        JenkinsAPIManager jenkinsAPIManager = new JenkinsAPIManager();
+//        jenkinsAPIManager.getParticularRoles(type);
+        List<String> str = new ArrayList<>();
+        return str;
+    }
+
+    public Integer createRole(){
+
         return 1;
     }
 

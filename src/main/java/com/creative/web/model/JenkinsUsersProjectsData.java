@@ -12,7 +12,7 @@ public class JenkinsUsersProjectsData {
 
     @ManyToOne
     @JoinColumn(name = "project_id")
-    private JenkinsProjectData project;
+    private ProjectData project;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -23,7 +23,7 @@ public class JenkinsUsersProjectsData {
     public JenkinsUsersProjectsData() {
     }
 
-    public JenkinsUsersProjectsData(Integer id, JenkinsProjectData project, JenkinsUserData user, Integer assignedUserId) {
+    public JenkinsUsersProjectsData(Integer id, ProjectData project, JenkinsUserData user, Integer assignedUserId) {
         this.id = id;
         this.project = project;
         this.user = user;
@@ -38,11 +38,11 @@ public class JenkinsUsersProjectsData {
         this.id = id;
     }
 
-    public JenkinsProjectData getProject() {
+    public ProjectData getProject() {
         return project;
     }
 
-    public void setProject(JenkinsProjectData project) {
+    public void setProject(ProjectData project) {
         this.project = project;
     }
 
