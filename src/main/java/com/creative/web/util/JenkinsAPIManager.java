@@ -139,7 +139,7 @@ public class JenkinsAPIManager {
         return res;
     }
 
-    // Jenkins Roles
+    // Jenkins Roles <----
 
 // these are the type that are available in Jenkins globalRoles, projectRoles, slaveRoles
     /* These are the permission code that used in the Jenkins
@@ -391,10 +391,9 @@ public class JenkinsAPIManager {
         client.close();
     }
 
-    public void deleteUserFromAllRoles(String roleName, String type, String username) throws IOException {
+    public void deleteUserFromAllRoles(String type, String username) throws IOException {
 
         formParams.add(new BasicNameValuePair("type", type));
-        formParams.add(new BasicNameValuePair("roleName", roleName));
         formParams.add(new BasicNameValuePair("username", username));
 
         UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formParams, Consts.UTF_8);
@@ -438,13 +437,11 @@ public class JenkinsAPIManager {
         CloseableHttpResponse response = client.execute(new HttpGet("localhost:8080/role-strategy/strategy/getAllRoles?type=" + type));
         System.out.println(response.getStatusLine().getStatusCode());
         HttpEntity entity = response.getEntity();
-
         // Read the contents of an entity and return it as a String.
         String content = EntityUtils.toString(entity);
-//        System.out.println(content);
+        System.out.println(content);
         response.close();
         client.close();
-
     }
 
     // Jenkins Job creation <--
@@ -460,6 +457,27 @@ public class JenkinsAPIManager {
         JenkinsJobXMLSCMData jenkinsJobXMLSCMData = new JenkinsJobXMLSCMData();
         JenkinsJobXMLPublisherData jenkinsJobXMLPublisherData = new JenkinsJobXMLPublisherData();
         JenkinsJobXMLTiggersData jenkinsJobXMLTiggersData = new JenkinsJobXMLTiggersData();
+
+        jenkinsJobXMLPropertiesData.setStatus("Active");
+        jenkinsJobXMLPropertiesData.setProjectUrl("https://github.com/tejasgawali4/SpringBoot.git");
+        jenkinsJobXMLPropertiesData.setDisplayName("Spring Boot Repo");
+
+        jenkinsJobXMLBuilderData.setStatus("Active");
+        jenkinsJobXMLBuilderData.setType("Maven");
+
+        jenkinsJobXMLBuilderWrapperData.setStatus("Active");
+        jenkinsJobXMLBuilderWrapperData.setOption("clearDir");
+
+        jenkinsJobXMLSCMData.setStatus("Active");
+        jenkinsJobXMLSCMData.setBranches("*/master");
+        jenkinsJobXMLSCMData.setUserRemoteConfigUrl("https://github.com/tejasgawali4/SpringBoot.git");
+
+        jenkinsJobXMLPublisherData.setStatus("Active");
+        jenkinsJobXMLPublisherData.setType("tomcat8");
+
+        jenkinsJobXMLTiggersData.setStatus("Active");
+        jenkinsJobXMLTiggersData.setScmTriggerSpec("GitHubPushTrigger");
+
 
 
         jenkinsJobXMLData.setJenkinsJobXMLPropertiesData(jenkinsJobXMLPropertiesData);

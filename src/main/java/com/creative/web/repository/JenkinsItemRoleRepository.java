@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface JenkinsItemRoleRepository extends JpaRepository<JenkinsItemRoleData,Integer> {
+    public JenkinsItemRoleData findByName(String roleName);
 }

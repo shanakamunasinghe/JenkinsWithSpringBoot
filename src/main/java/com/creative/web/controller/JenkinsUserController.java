@@ -1,6 +1,6 @@
 package com.creative.web.controller;
 import com.creative.web.dto.UserDataDTO;
-import com.creative.web.service.UserService;
+import com.creative.web.service.JenkinsUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,45 +12,45 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-public class UserController {
+public class JenkinsUserController {
     @Autowired
-    private UserService userService;
+    private JenkinsUserService jenkinsUserService;
 
-    @RequestMapping(value = "/usersData",
+    @RequestMapping(value = "/jenkinsUsersData",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<UserDataDTO>> getAllUserData() throws IOException {
-        return new ResponseEntity<List<UserDataDTO>>(userService.findALLUsers(), HttpStatus.OK);
+        return new ResponseEntity<List<UserDataDTO>>(jenkinsUserService.findALLJenkinsUsers(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/userData",
+    @RequestMapping(value = "/jenkinsUserData",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDataDTO> getUserData(@PathVariable("id") Integer id) {
-        return new ResponseEntity<UserDataDTO>(userService.findById(id), HttpStatus.OK);
+        return new ResponseEntity<UserDataDTO>(jenkinsUserService.findById(id), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/userData",
+    @RequestMapping(value = "/jenkinsUserData",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Integer> createUser(@RequestBody UserDataDTO user) throws IOException {
-        userService.createUser(user);
+        jenkinsUserService.createJenkinsUser(user);
         return new ResponseEntity<Integer>(01, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/userData",
+    @RequestMapping(value = "/jenkinsUserData",
             method = RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Integer> updateUserData(@RequestBody UserDataDTO user){
-        userService.updateUser(user);
+        jenkinsUserService.updatejenkinsUser(user);
         return new ResponseEntity<Integer>(user.getId(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/userData",
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Integer> deleteUserData(@RequestBody UserDataDTO user) {
-        userService.deleteUser(user);
+    public ResponseEntity<Integer> deleteUserData(@RequestBody UserDataDTO user) throws IOException {
+        jenkinsUserService.deletejenkinsUser(user);
         return new ResponseEntity<Integer>(user.getId(), HttpStatus.OK);
     }
 }

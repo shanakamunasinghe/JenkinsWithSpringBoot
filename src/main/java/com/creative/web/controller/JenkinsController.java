@@ -2,6 +2,7 @@ package com.creative.web.controller;
 import com.creative.web.dto.UserDataDTO;
 import com.creative.web.model.JenkinsJobData;
 import com.creative.web.service.JenkinsService;
+import com.creative.web.service.JenkinsUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,28 +18,19 @@ public class JenkinsController {
     @Autowired
     public final JenkinsService jenkinsService;
 
+    @Autowired
+    public JenkinsUserService jenkinsUserService;
+
     public JenkinsController(JenkinsService jenkinsService) {
         this.jenkinsService = jenkinsService;
     }
 
-    @RequestMapping(value = "/createJenkinsUser",
-            method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Integer> createJenkinsUser(@RequestBody UserDataDTO user) throws IOException {
-        return new ResponseEntity<Integer>(jenkinsService.createJenkinsUser(user), HttpStatus.OK);
-    }
-    @RequestMapping(value = "/deleteJenkinsUser",
-            method = RequestMethod.DELETE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Integer> deleteJenkinsUser() throws IOException {
-        return new ResponseEntity<Integer>(jenkinsService.deleteJenkinsUser(), HttpStatus.OK);
-    }
 
     @RequestMapping(value = "/runJenkinsJob",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Integer> runJenkinsJob() throws IOException {
-        return new ResponseEntity<Integer>(jenkinsService.runJenkinsJob(), HttpStatus.OK);
+    public ResponseEntity<Integer> runJenkinsJob(@RequestBody String jobName) throws IOException {
+        return new ResponseEntity<Integer>(jenkinsService.runJenkinsJob(jobName), HttpStatus.OK);
     }
     @RequestMapping(value = "/getJenkinsStatus",
             method = RequestMethod.GET,
@@ -50,9 +42,10 @@ public class JenkinsController {
     @RequestMapping(value = "/createJenkinsJob",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Integer> createJenkinsJob(@RequestBody JenkinsJobData jobName) throws IOException {
-        return new ResponseEntity<Integer>(jenkinsService.createJenkinsJob(jobName.getJobName()), HttpStatus.OK);
+    public ResponseEntity<Integer> createJenkinsJob(@RequestBody JenkinsJobData jenkinsJobData) throws IOException {
+        return new ResponseEntity<Integer>(jenkinsService.createJenkinsJob(jenkinsJobData.getJobName()), HttpStatus.OK);
     }
+
 
 
 

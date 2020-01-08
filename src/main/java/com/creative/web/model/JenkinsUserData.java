@@ -26,15 +26,18 @@ public class JenkinsUserData implements Serializable {
             nullable = true)
     private EmployeeData employeeData;
 
+    private String status;
+
 
     public JenkinsUserData() {
     }
 
-    public JenkinsUserData(String name, String jenkinsName, String jenkinsPassword, String jenkinsAPIToken) {
+    public JenkinsUserData(String name, String jenkinsName, String jenkinsPassword, String jenkinsAPIToken, String status) {
         this.name = name;
         this.jenkinsName = jenkinsName;
         this.jenkinsPassword = jenkinsPassword;
         this.jenkinsAPIToken = jenkinsAPIToken;
+        this.status = status;
     }
 
     public Integer getId() {
@@ -91,5 +94,13 @@ public class JenkinsUserData implements Serializable {
 
     public void setJenkinsAPIToken(String jenkinsAPIToken) {
         this.jenkinsAPIToken = jenkinsAPIToken;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

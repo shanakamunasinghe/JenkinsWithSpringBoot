@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface JenkinsUserRepository extends JpaRepository<JenkinsUserData,Integer> {
+    public JenkinsUserData findByJenkinsName(String jenkinsName);
 }
