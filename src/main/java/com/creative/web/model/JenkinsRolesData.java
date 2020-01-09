@@ -1,5 +1,7 @@
 package com.creative.web.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,16 +11,21 @@ public class JenkinsRolesData {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @JsonManagedReference
     @ManyToOne(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     @JoinColumn(name = "jenkins_global_role_id",
             nullable = true)
     private JenkinsGlobalRoleData jenkinsGlobalRoleData;
+
+    @JsonManagedReference
     @ManyToOne(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     @JoinColumn(name = "jenkins_item_role_id",
             nullable = true)
     private JenkinsItemRoleData jenkinsItemRoleData;
+
+    @JsonManagedReference
     @ManyToOne(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     @JoinColumn(name = "jenkins_user_id",

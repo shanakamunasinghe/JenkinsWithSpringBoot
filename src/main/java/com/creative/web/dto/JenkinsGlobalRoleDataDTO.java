@@ -1,16 +1,12 @@
-package com.creative.web.model;
+package com.creative.web.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.creative.web.model.JenkinsRolesOptionData;
 
-import javax.persistence.*;
-import java.util.Set;
+public class JenkinsGlobalRoleDataDTO extends JenkinsRolesOptionData {
 
-@Entity
-@Table
-public class JenkinsGlobalRoleData extends JenkinsRolesOptionData{
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
+
     private String name;
     private String status;
 
@@ -33,11 +29,7 @@ public class JenkinsGlobalRoleData extends JenkinsRolesOptionData{
     private boolean viewDelete;
     private boolean viewRead;
 
-    @JsonBackReference
-    @OneToMany(mappedBy = "jenkinsGlobalRoleData")
-    private Set<JenkinsRolesData> jenkinsRolesDataSet;
-
-    public JenkinsGlobalRoleData() {
+    public JenkinsGlobalRoleDataDTO() {
     }
 
     public Integer getId() {
@@ -166,13 +158,5 @@ public class JenkinsGlobalRoleData extends JenkinsRolesOptionData{
 
     public void setViewRead(boolean viewRead) {
         this.viewRead = viewRead;
-    }
-
-    public Set<JenkinsRolesData> getJenkinsRolesDataSet() {
-        return jenkinsRolesDataSet;
-    }
-
-    public void setJenkinsRolesDataSet(Set<JenkinsRolesData> jenkinsRolesDataSet) {
-        this.jenkinsRolesDataSet = jenkinsRolesDataSet;
     }
 }

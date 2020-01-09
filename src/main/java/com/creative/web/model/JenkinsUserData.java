@@ -1,6 +1,7 @@
 package com.creative.web.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,6 +19,7 @@ public class JenkinsUserData implements Serializable {
     private String jenkinsPassword;
     private String jenkinsAPIToken;
 
+    @JsonManagedReference
     @OneToOne(cascade = CascadeType.REMOVE,
             fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id",

@@ -1,6 +1,8 @@
 package com.creative.web.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -18,14 +20,14 @@ public class JenkinsItemRoleData extends JenkinsRolesOptionData {
     private String pattern;
     private String status;
 
+    @JsonManagedReference
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "project_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     private ProjectData projectData;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "jenkinsItemRoleData")
-    @JsonIgnore
     private Set<JenkinsRolesData> jenkinsRolesDataSet;
 
     public JenkinsItemRoleData() {

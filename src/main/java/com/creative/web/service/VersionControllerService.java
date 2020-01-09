@@ -22,7 +22,7 @@ public class VersionControllerService {
         for(VersionControllerData vCD : versionControllerData){
             VersionControllerDataDTO vCDDTO = new VersionControllerDataDTO();
             vCDDTO.setId(vCD.getId());
-            vCDDTO.setName(vCDDTO.getName());
+            vCDDTO.setName(vCD.getName());
             vCDDTO.setValid(vCD.getValid());
             versionControllerDataDTOS.add(vCDDTO);
         }
