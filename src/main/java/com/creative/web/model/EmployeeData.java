@@ -1,10 +1,12 @@
 package com.creative.web.model;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table
@@ -15,6 +17,19 @@ public class EmployeeData {
     private String name;
     private String status;
     private String role;
+
+
+    @OneToOne(cascade = CascadeType.REMOVE,
+            fetch = FetchType.LAZY)
+    @JoinColumn(name = "jenkins_user_id",
+            unique = true,
+            nullable = true)
+    private JenkinsUserData jenkinsUserData;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private Set<EmployeeProjectsData> employeeProjectsData;
 
     @CreationTimestamp
     private Date created;
@@ -78,5 +93,21 @@ public class EmployeeData {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public JenkinsUserData getJenkinsUserData() {
+        return jenkinsUserData;
+    }
+
+    public void setJenkinsUserData(JenkinsUserData jenkinsUserData) {
+        this.jenkinsUserData = jenkinsUserData;
+    }
+
+    public Set<EmployeeProjectsData> getEmployeeProjectsData() {
+        return employeeProjectsData;
+    }
+
+    public void setEmployeeProjectsData(Set<EmployeeProjectsData> employeeProjectsData) {
+        this.employeeProjectsData = employeeProjectsData;
     }
 }

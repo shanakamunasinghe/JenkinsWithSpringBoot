@@ -1,7 +1,7 @@
 package com.creative.web.model;
 
 public class JenkinsJobXMLPropertiesData {
-    private LogRotator logRotator;
+    private JenkinsLogRotator logRotator;
     // uses for github properties
     private String status;
     private String projectUrl;
@@ -12,18 +12,18 @@ public class JenkinsJobXMLPropertiesData {
     public JenkinsJobXMLPropertiesData() {
     }
 
-    public JenkinsJobXMLPropertiesData(LogRotator logRotator, String projectUrl, String displayName,String status) {
+    public JenkinsJobXMLPropertiesData(JenkinsLogRotator logRotator, String projectUrl, String displayName, String status) {
         this.logRotator = logRotator;
         this.projectUrl = projectUrl;
         this.displayName = displayName;
         this.status = status;
     }
 
-    public LogRotator getLogRotator() {
+    public JenkinsLogRotator getLogRotator() {
         return logRotator;
     }
 
-    public void setLogRotator(LogRotator logRotator) {
+    public void setLogRotator(JenkinsLogRotator logRotator) {
         this.logRotator = logRotator;
     }
 

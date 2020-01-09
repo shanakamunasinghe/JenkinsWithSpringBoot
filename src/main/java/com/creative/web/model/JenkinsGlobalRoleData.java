@@ -1,6 +1,9 @@
 package com.creative.web.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table
@@ -8,6 +11,7 @@ public class JenkinsGlobalRoleData extends JenkinsRolesOptionData{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
 
     private String name;
     private String status;
@@ -30,6 +34,10 @@ public class JenkinsGlobalRoleData extends JenkinsRolesOptionData{
     private boolean viewCreate;
     private boolean viewDelete;
     private boolean viewRead;
+
+    @OneToMany(mappedBy = "jenkinsGlobalRoleData")
+    @JsonIgnore
+    private Set<JenkinsRolesData> jenkinsRolesDataSet;
 
     public JenkinsGlobalRoleData() {
     }
@@ -160,5 +168,13 @@ public class JenkinsGlobalRoleData extends JenkinsRolesOptionData{
 
     public void setViewRead(boolean viewRead) {
         this.viewRead = viewRead;
+    }
+
+    public Set<JenkinsRolesData> getJenkinsRolesDataSet() {
+        return jenkinsRolesDataSet;
+    }
+
+    public void setJenkinsRolesDataSet(Set<JenkinsRolesData> jenkinsRolesDataSet) {
+        this.jenkinsRolesDataSet = jenkinsRolesDataSet;
     }
 }

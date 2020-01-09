@@ -22,6 +22,7 @@ public class EmployeeService {
             employeeDataDTO.setName(eD.getName());
             employeeDataDTO.setRole(eD.getRole());
             employeeDataDTO.setStatus(eD.getStatus());
+            employeeDataDTOS.add(employeeDataDTO);
         }
         return employeeDataDTOS;
     }
@@ -45,8 +46,19 @@ public class EmployeeService {
         return 1;
     }
 
+    public Integer updateEmployee(EmployeeDataDTO employeeDataDTO){
+        EmployeeData employeeData = new EmployeeData();
+        employeeData.setId(employeeDataDTO.getId());
+        employeeData.setName(employeeDataDTO.getName());
+        employeeData.setRole(employeeDataDTO.getRole());
+        employeeData.setStatus(employeeDataDTO.getStatus());
+        employeeRepository.save(employeeData);
+        return 1;
+    }
+
     public Integer deleteEmployee(EmployeeDataDTO employeeDataDTO){
         EmployeeData employeeData = new EmployeeData();
+        employeeData.setId(employeeDataDTO.getId());
         employeeData.setName(employeeDataDTO.getName());
         employeeData.setRole(employeeDataDTO.getRole());
         employeeData.setStatus(employeeDataDTO.getStatus());

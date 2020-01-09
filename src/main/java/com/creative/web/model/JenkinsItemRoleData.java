@@ -5,6 +5,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table
@@ -22,6 +23,10 @@ public class JenkinsItemRoleData extends JenkinsRolesOptionData {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private ProjectData projectData;
+
+    @OneToMany(mappedBy = "jenkinsItemRoleData")
+    @JsonIgnore
+    private Set<JenkinsRolesData> jenkinsRolesDataSet;
 
     public JenkinsItemRoleData() {
     }
@@ -64,5 +69,13 @@ public class JenkinsItemRoleData extends JenkinsRolesOptionData {
 
     public void setPattern(String pattern) {
         this.pattern = pattern;
+    }
+
+    public Set<JenkinsRolesData> getJenkinsRolesDataSet() {
+        return jenkinsRolesDataSet;
+    }
+
+    public void setJenkinsRolesDataSet(Set<JenkinsRolesData> jenkinsRolesDataSet) {
+        this.jenkinsRolesDataSet = jenkinsRolesDataSet;
     }
 }

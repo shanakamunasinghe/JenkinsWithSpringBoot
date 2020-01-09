@@ -2,12 +2,12 @@ package com.creative.web.model;
 
 public class JenkinsAPITokenData {
     private String status;
-    private Data data;
+    private JenkinsStatusData data;
 
     public JenkinsAPITokenData() {
     }
 
-    public JenkinsAPITokenData(String status, Data data) {
+    public JenkinsAPITokenData(String status, JenkinsStatusData data) {
         this.status = status;
         this.data = data;
     }
@@ -20,11 +20,11 @@ public class JenkinsAPITokenData {
         this.status = status;
     }
 
-    public Data getData() {
+    public JenkinsStatusData getData() {
         return data;
     }
 
-    public void setData(Data data) {
+    public void setData(JenkinsStatusData data) {
         this.data = data;
     }
 }

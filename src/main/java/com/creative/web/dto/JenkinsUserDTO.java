@@ -1,6 +1,6 @@
 package com.creative.web.dto;
 
-public class UserDataDTO {
+public class JenkinsUserDTO {
     private Integer id;
 
     private String name;
@@ -9,9 +9,9 @@ public class UserDataDTO {
     private String jenkinsPassword;
     private String jenkinsAPIToken;
 
-    public UserDataDTO() {
+    public JenkinsUserDTO() {
     }
-    public UserDataDTO(String name, String role, String jenkinsName, String jenkinsPassword ,String jenkinsAPIToken){
+    public JenkinsUserDTO(String name, String role, String jenkinsName, String jenkinsPassword , String jenkinsAPIToken){
         this.name = name;
         this.role = role;
         this.jenkinsName = jenkinsName;

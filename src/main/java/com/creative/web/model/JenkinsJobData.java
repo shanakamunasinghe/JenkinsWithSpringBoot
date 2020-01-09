@@ -1,6 +1,9 @@
 package com.creative.web.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table
@@ -13,6 +16,11 @@ public class JenkinsJobData {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "project_id", nullable = false)
     private ProjectData projectData;
+
+    @OneToMany(mappedBy = "jenkinsJob")
+    @JsonIgnore
+    Set<JenkinsJobHistoryData> jenkinsJobHistoryData;
+
 
     private String description;
     private String status;
@@ -64,5 +72,13 @@ public class JenkinsJobData {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Set<JenkinsJobHistoryData> getJenkinsJobHistoryData() {
+        return jenkinsJobHistoryData;
+    }
+
+    public void setJenkinsJobHistoryData(Set<JenkinsJobHistoryData> jenkinsJobHistoryData) {
+        this.jenkinsJobHistoryData = jenkinsJobHistoryData;
     }
 }

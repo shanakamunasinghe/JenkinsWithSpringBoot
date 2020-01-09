@@ -1,6 +1,12 @@
 package com.creative.web.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table
@@ -11,6 +17,10 @@ public class AutomationToolData {
     private String name;
     private String status;
     private String description;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "automationToolData",cascade = CascadeType.ALL)
+    private Set<ProjectData> projectData;
 
     public AutomationToolData() {
     }
@@ -45,5 +55,13 @@ public class AutomationToolData {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Set<ProjectData> getProjectData() {
+        return projectData;
+    }
+
+    public void setProjectData(Set<ProjectData> projectData) {
+        this.projectData = projectData;
     }
 }

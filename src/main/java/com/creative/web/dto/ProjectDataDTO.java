@@ -7,17 +7,17 @@ public class ProjectDataDTO {
 
     private String name;
     private Integer createUserId;
-    private boolean status;
-    private AutomationToolData automationToolData;
+    private String status;
+    private AutomationToolDataDTO automationToolData;
 
     public ProjectDataDTO() {
     }
 
-    public ProjectDataDTO(String name, Integer createUserId, boolean status, AutomationToolData automationToolId) {
+    public ProjectDataDTO(String name, Integer createUserId, String status, AutomationToolDataDTO automationToolData) {
         this.name = name;
         this.createUserId = createUserId;
         this.status = status;
-        this.automationToolData = automationToolId;
+        this.automationToolData = automationToolData;
     }
 
     public Integer getId() {
@@ -44,19 +44,19 @@ public class ProjectDataDTO {
         this.createUserId = createUserId;
     }
 
-    public boolean isStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    public AutomationToolData getAutomationToolData() {
+    public AutomationToolDataDTO getAutomationToolDataDTO() {
         return automationToolData;
     }
 
-    public void setAutomationToolData(AutomationToolData automationToolData) {
+    public void setAutomationToolDataDTO(AutomationToolDataDTO automationToolData) {
         this.automationToolData = automationToolData;
     }
 }

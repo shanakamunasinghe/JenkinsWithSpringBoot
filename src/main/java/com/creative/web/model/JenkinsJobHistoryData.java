@@ -11,9 +11,11 @@ public class JenkinsJobHistoryData {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "job_id")
     private JenkinsJobData jenkinsJob;
+
     private String phase;
     private String status;
     @CreationTimestamp
@@ -68,4 +70,6 @@ public class JenkinsJobHistoryData {
     public void setStatus(String status) {
         this.status = status;
     }
+
+
 }

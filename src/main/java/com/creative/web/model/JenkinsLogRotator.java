@@ -1,15 +1,15 @@
 package com.creative.web.model;
 
-public class LogRotator {
+public class JenkinsLogRotator {
     private int daysToKeep;
     private int numToKeep;
     private int artifactDaysToKeep;
     private int artifactNumToKeep;
 
-    public LogRotator() {
+    public JenkinsLogRotator() {
     }
 
-    public LogRotator(int daysToKeep, int numToKeep, int artifactDaysToKeep, int artifactNumToKeep) {
+    public JenkinsLogRotator(int daysToKeep, int numToKeep, int artifactDaysToKeep, int artifactNumToKeep) {
         this.daysToKeep = daysToKeep;
         this.numToKeep = numToKeep;
         this.artifactDaysToKeep = artifactDaysToKeep;

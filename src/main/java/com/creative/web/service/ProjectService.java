@@ -1,9 +1,10 @@
 package com.creative.web.service;
 
+import com.creative.web.dto.AutomationToolDataDTO;
 import com.creative.web.dto.ProjectDataDTO;
+import com.creative.web.model.AutomationToolData;
 import com.creative.web.model.ProjectData;
 import com.creative.web.repository.ProjectRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,7 +25,6 @@ public class ProjectService {
         if (projectList != null) {
             for (ProjectData projectData : projectList) {
                 projectDTOList.add(mapProjectDataToDTO(projectData));
-
             }
         }
         return projectDTOList;
@@ -39,9 +39,31 @@ public class ProjectService {
         ProjectData project = new ProjectData();
         project.setName(projectDTO.getName());
         project.setCreateUserId(projectDTO.getCreateUserId());
-        project.setStatus(projectDTO.isStatus());
-        if(projectDTO.getAutomationToolData() != null){
-            project.setAutomationToolData(projectDTO.getAutomationToolData());
+        project.setStatus(projectDTO.getStatus());
+        if(projectDTO.getAutomationToolDataDTO() != null){
+            AutomationToolData automationToolData = new AutomationToolData();
+            automationToolData.setId(projectDTO.getAutomationToolDataDTO().getId());
+            automationToolData.setName(projectDTO.getAutomationToolDataDTO().getName());
+            automationToolData.setDescription(projectDTO.getAutomationToolDataDTO().getDescription());
+            automationToolData.setDescription(projectDTO.getAutomationToolDataDTO().getDescription());
+            project.setAutomationToolData(automationToolData);
+        }
+        projectRepository.save(project);
+    }
+
+    public void updateProject(ProjectDataDTO projectDTO){
+        ProjectData project = new ProjectData();
+        project.setId(projectDTO.getId());
+        project.setName(projectDTO.getName());
+        project.setCreateUserId(projectDTO.getCreateUserId());
+        project.setStatus(projectDTO.getStatus());
+        if(projectDTO.getAutomationToolDataDTO() != null){
+            AutomationToolData automationToolData = new AutomationToolData();
+            automationToolData.setId(projectDTO.getAutomationToolDataDTO().getId());
+            automationToolData.setName(projectDTO.getAutomationToolDataDTO().getName());
+            automationToolData.setDescription(projectDTO.getAutomationToolDataDTO().getDescription());
+            automationToolData.setDescription(projectDTO.getAutomationToolDataDTO().getDescription());
+            project.setAutomationToolData(automationToolData);
         }
         projectRepository.save(project);
     }
@@ -56,9 +78,14 @@ public class ProjectService {
         projectDTO.setId(projectData.getId());
         projectDTO.setName(projectData.getName());
         projectDTO.setCreateUserId(projectData.getCreateUserId());
-        projectDTO.setStatus(projectData.isStatus());
+        projectDTO.setStatus(projectData.getStatus());
         if(projectData.getAutomationToolData() != null){
-            projectDTO.setAutomationToolData(projectData.getAutomationToolData());
+            AutomationToolDataDTO automationToolDataDTO = new AutomationToolDataDTO();
+            automationToolDataDTO.setId(projectData.getAutomationToolData().getId());
+            automationToolDataDTO.setStatus(projectData.getAutomationToolData().getStatus());
+            automationToolDataDTO.setDescription(projectData.getAutomationToolData().getDescription());
+            automationToolDataDTO.setName(projectData.getAutomationToolData().getName());
+            projectDTO.setAutomationToolDataDTO(automationToolDataDTO);
         }
         return projectDTO;
     }

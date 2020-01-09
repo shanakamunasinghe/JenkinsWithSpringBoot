@@ -22,7 +22,7 @@ public class ProjectController {
     public ResponseEntity<List<ProjectDataDTO>> getAllProjectsData() {
         return new ResponseEntity<List<ProjectDataDTO>>(projectService.findALLUProjects(), HttpStatus.OK);
     }
-    @RequestMapping(value = "/projectData",
+    @RequestMapping(value = "/projectData/{id}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProjectDataDTO> getProjectData(@PathVariable("id") Integer id) {
@@ -39,12 +39,12 @@ public class ProjectController {
             method = RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Integer> updateProject(@RequestBody ProjectDataDTO project) {
-        projectService.createProject(project);
+        projectService.updateProject(project);
         return new ResponseEntity<Integer>(project.getId(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/projectData",
-            method = RequestMethod.DELETE,
+    @RequestMapping(value = "/deleteProjectData",
+            method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Integer> deleteProject(@RequestBody ProjectDataDTO project) {
         projectService.deleteProject(project);

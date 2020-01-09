@@ -1,23 +1,11 @@
-package com.creative.web.model;
+package com.creative.web.dto;
 
-import javax.persistence.*;
-
-@Entity
-@Table
-public class VersionControllerData {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class VersionControllerDataDTO {
     private Integer id;
     private String name;
     private String valid;
 
-    public VersionControllerData() {
-    }
-
-    public VersionControllerData(String name, String valid) {
-        this.name = name;
-        this.valid = valid;
+    public VersionControllerDataDTO() {
     }
 
     public Integer getId() {

@@ -1,5 +1,4 @@
 package com.creative.web.controller;
-import com.creative.web.dto.UserDataDTO;
 import com.creative.web.model.JenkinsJobData;
 import com.creative.web.service.JenkinsService;
 import com.creative.web.service.JenkinsUserService;

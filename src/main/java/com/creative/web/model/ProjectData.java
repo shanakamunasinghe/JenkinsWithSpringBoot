@@ -1,5 +1,9 @@
 package com.creative.web.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -12,22 +16,23 @@ public class ProjectData {
 
     private String name;
     private Integer createUserId;
-    private boolean status;
+    private String status;
 
-    @OneToOne(cascade = CascadeType.ALL,
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.DETACH,
             fetch = FetchType.LAZY)
     @JoinColumn(name = "automation_tool_data_id",
-            unique = true,
             nullable = true)
     private AutomationToolData automationToolData;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "project")
-    Set<JenkinsUsersProjectsData> jenkinsUsersProjectsData;
+    private  Set<EmployeeProjectsData> employeeProjectsData;
 
     public ProjectData() {
     }
 
-    public ProjectData(String name, Integer createUserId, boolean status, AutomationToolData automationToolData) {
+    public ProjectData(String name, Integer createUserId, String status, AutomationToolData automationToolData) {
         this.name = name;
         this.createUserId = createUserId;
         this.status = status;
@@ -58,20 +63,20 @@ public class ProjectData {
         this.createUserId = createUser;
     }
 
-    public boolean isStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    public Set<JenkinsUsersProjectsData> getJenkinsUsersProjectsData() {
-        return jenkinsUsersProjectsData;
+    public Set<EmployeeProjectsData> getEmployeeProjectsData() {
+        return employeeProjectsData;
     }
 
-    public void setJenkinsUsersProjectsData(Set<JenkinsUsersProjectsData> jenkinsUsersProjectsData) {
-        this.jenkinsUsersProjectsData = jenkinsUsersProjectsData;
+    public void setEmployeeProjectsData(Set<EmployeeProjectsData> employeeProjectsData) {
+        this.employeeProjectsData = employeeProjectsData;
     }
 
     public AutomationToolData getAutomationToolData() {
@@ -81,4 +86,5 @@ public class ProjectData {
     public void setAutomationToolData(AutomationToolData automationToolData) {
         this.automationToolData = automationToolData;
     }
+
 }

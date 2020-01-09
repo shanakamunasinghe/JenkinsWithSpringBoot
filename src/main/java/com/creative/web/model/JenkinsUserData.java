@@ -1,5 +1,7 @@
 package com.creative.web.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
@@ -16,18 +18,18 @@ public class JenkinsUserData implements Serializable {
     private String jenkinsPassword;
     private String jenkinsAPIToken;
 
-    @OneToMany(mappedBy = "user")
-    private Set<JenkinsUsersProjectsData> jenkinsUsersProjectsData;
-
-    @OneToOne(cascade = CascadeType.ALL,
+    @OneToOne(cascade = CascadeType.REMOVE,
             fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id",
             unique = true,
-            nullable = true)
+            nullable = false)
     private EmployeeData employeeData;
 
     private String status;
 
+    @OneToMany(mappedBy = "jenkinsUserData")
+    @JsonIgnore
+    private Set<JenkinsRolesData> jenkinsRolesDataSet;
 
     public JenkinsUserData() {
     }
@@ -72,14 +74,6 @@ public class JenkinsUserData implements Serializable {
         this.jenkinsPassword = jenkinsPassword;
     }
 
-    public Set<JenkinsUsersProjectsData> getJenkinsUsersProjectsData() {
-        return jenkinsUsersProjectsData;
-    }
-
-    public void setJenkinsUsersProjectsData(Set<JenkinsUsersProjectsData> jenkinsUsersProjectsData) {
-        this.jenkinsUsersProjectsData = jenkinsUsersProjectsData;
-    }
-
     public EmployeeData getEmployeeData() {
         return employeeData;
     }
@@ -102,5 +96,13 @@ public class JenkinsUserData implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Set<JenkinsRolesData> getJenkinsRolesDataSet() {
+        return jenkinsRolesDataSet;
+    }
+
+    public void setJenkinsRolesDataSet(Set<JenkinsRolesData> jenkinsRolesDataSet) {
+        this.jenkinsRolesDataSet = jenkinsRolesDataSet;
     }
 }

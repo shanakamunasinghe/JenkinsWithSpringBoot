@@ -1,29 +1,33 @@
 package com.creative.web.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class JenkinsUsersProjectsData {
+public class EmployeeProjectsData {
     @Id
     private Integer id;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "project_id")
     private ProjectData project;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private JenkinsUserData user;
+    private EmployeeData user;
 
     private Integer assignedUserId;
 
-    public JenkinsUsersProjectsData() {
+    public EmployeeProjectsData() {
     }
 
-    public JenkinsUsersProjectsData(Integer id, ProjectData project, JenkinsUserData user, Integer assignedUserId) {
+    public EmployeeProjectsData(Integer id, ProjectData project, EmployeeData user, Integer assignedUserId) {
         this.id = id;
         this.project = project;
         this.user = user;
@@ -46,11 +50,11 @@ public class JenkinsUsersProjectsData {
         this.project = project;
     }
 
-    public JenkinsUserData getUser() {
+    public EmployeeData getUser() {
         return user;
     }
 
-    public void setUser(JenkinsUserData user) {
+    public void setUser(EmployeeData user) {
         this.user = user;
     }
 

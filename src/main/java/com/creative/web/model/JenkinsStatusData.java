@@ -1,14 +1,14 @@
 package com.creative.web.model;
 
-public class Data {
+public class JenkinsStatusData {
     private String tokenName;
     private String tokenUuid;
     private String tokenValue;
 
-    public Data() {
+    public JenkinsStatusData() {
     }
 
-    public Data(String tokenName, String tokenUuid, String tokenValue) {
+    public JenkinsStatusData(String tokenName, String tokenUuid, String tokenValue) {
         this.tokenName = tokenName;
         this.tokenUuid = tokenUuid;
         this.tokenValue = tokenValue;

@@ -1,20 +1,18 @@
 package com.creative.web.dto;
 
 import com.creative.web.model.ProjectData;
-import com.creative.web.model.JenkinsUserData;
-
 
 public class UsersProjectsDataDTO {
 
     private Integer id;
     private ProjectData project;
-    private JenkinsUserData user;
+    private EmployeeDataDTO user;
     private Integer assignedUserId;
 
     public UsersProjectsDataDTO() {
     }
 
-    public UsersProjectsDataDTO(Integer id, ProjectData project, JenkinsUserData user, Integer assignedUserId) {
+    public UsersProjectsDataDTO(Integer id, ProjectData project, EmployeeDataDTO user, Integer assignedUserId) {
         this.id = id;
         this.project = project;
         this.user = user;
@@ -37,11 +35,11 @@ public class UsersProjectsDataDTO {
         this.project = project;
     }
 
-    public JenkinsUserData getUser() {
+    public EmployeeDataDTO getUser() {
         return user;
     }
 
-    public void setUser(JenkinsUserData user) {
+    public void setUser(EmployeeDataDTO user) {
         this.user = user;
     }
 

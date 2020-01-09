@@ -1,7 +1,5 @@
 package com.creative.web.service;
 
-import com.creative.web.dto.JenkinsUserDataDTO;
-import com.creative.web.dto.UserDataDTO;
 import com.creative.web.model.JenkinsGlobalRoleData;
 import com.creative.web.model.JenkinsItemRoleData;
 import com.creative.web.model.JenkinsRolesData;

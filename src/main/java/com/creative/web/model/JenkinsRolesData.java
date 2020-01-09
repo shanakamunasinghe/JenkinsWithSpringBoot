@@ -9,22 +9,19 @@ public class JenkinsRolesData {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @OneToOne(cascade = CascadeType.ALL,
+    @ManyToOne(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     @JoinColumn(name = "jenkins_global_role_id",
-            unique = true,
             nullable = true)
     private JenkinsGlobalRoleData jenkinsGlobalRoleData;
-    @OneToOne(cascade = CascadeType.ALL,
+    @ManyToOne(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     @JoinColumn(name = "jenkins_item_role_id",
-            unique = true,
             nullable = true)
     private JenkinsItemRoleData jenkinsItemRoleData;
-    @OneToOne(cascade = CascadeType.ALL,
+    @ManyToOne(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     @JoinColumn(name = "jenkins_user_id",
-            unique = true,
             nullable = true)
     private JenkinsUserData jenkinsUserData;
     private String type;
