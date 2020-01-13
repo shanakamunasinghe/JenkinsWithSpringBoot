@@ -1,13 +1,11 @@
 package com.creative.web.service;
 
-import com.creative.web.model.JenkinsGlobalRoleData;
-import com.creative.web.model.JenkinsItemRoleData;
-import com.creative.web.model.JenkinsRolesData;
-import com.creative.web.model.JenkinsUserData;
-import com.creative.web.repository.JenkinsGlobalRoleRepository;
-import com.creative.web.repository.JenkinsItemRoleRepository;
-import com.creative.web.repository.JenkinsRolesRepository;
-import com.creative.web.repository.JenkinsUserRepository;
+import com.creative.web.dto.AutomationToolDataDTO;
+import com.creative.web.dto.JenkinsGlobalRoleDataDTO;
+import com.creative.web.dto.JenkinsItemRoleDataDTO;
+import com.creative.web.dto.ProjectDataDTO;
+import com.creative.web.model.*;
+import com.creative.web.repository.*;
 import com.creative.web.util.JenkinsAPIManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +29,9 @@ public class JenkinsService {
 
     @Autowired
     public JenkinsRolesRepository jenkinsRolesRepository;
+
+    @Autowired
+    public ProjectRepository projectRepository;
 
 
     public int runJenkinsJob(String jobName) throws IOException {
@@ -100,13 +101,13 @@ public class JenkinsService {
         jenkinsAPIManager.getParticularRoles(type);
     }
 
-    public Integer createJenkinsGlobalRole(JenkinsGlobalRoleData jenkinsGlobalRoleData) throws IOException {
-        JenkinsGlobalRoleData jGData = jenkinsGlobalRoleRepository.findByName(jenkinsGlobalRoleData.getName());
+    public Integer createJenkinsGlobalRole(JenkinsGlobalRoleDataDTO jenkinsGlobalRoleDataDTO) throws IOException {
+        JenkinsGlobalRoleData jGData = jenkinsGlobalRoleRepository.findByName(jenkinsGlobalRoleDataDTO.getName());
         // check whether there is existing one
         if(jGData == null){
             JenkinsAPIManager jenkinsAPIManager = new JenkinsAPIManager();
-            jenkinsAPIManager.createJenkinsGlobalRole(jenkinsGlobalRoleData);
-            jenkinsGlobalRoleRepository.save(jenkinsGlobalRoleData);
+            jenkinsAPIManager.createJenkinsGlobalRole(jenkinsGlobalRoleDataDTO);
+            jenkinsGlobalRoleRepository.save(mapJenkinsGlobalRoleDataDTOToEntity(jenkinsGlobalRoleDataDTO));
         }else if(jGData.getStatus().equals("Inactive")){
             jGData.setStatus("Active");
             jenkinsGlobalRoleRepository.save(jGData);
@@ -114,13 +115,64 @@ public class JenkinsService {
         return 1;
     }
 
-    public Integer createJenkinsItemRole(JenkinsItemRoleData jenkinsItemRoleData) throws IOException {
-        JenkinsItemRoleData jIData = jenkinsItemRoleRepository.findByName(jenkinsItemRoleData.getName());
+    // used to create Jenkins Global Role Data Map
+    public JenkinsGlobalRoleData mapJenkinsGlobalRoleDataDTOToEntity(JenkinsGlobalRoleDataDTO jenkinsGlobalRoleDataDTO){
+        JenkinsGlobalRoleData jenkinsGlobalRoleData = new JenkinsGlobalRoleData();
+        jenkinsGlobalRoleData.setName(jenkinsGlobalRoleDataDTO.getName());
+        jenkinsGlobalRoleData.setStatus("Active");
+
+        jenkinsGlobalRoleData.setCredentialsCreate(jenkinsGlobalRoleDataDTO.isCredentialsCreate());
+        jenkinsGlobalRoleData.setCredentialsDelete(jenkinsGlobalRoleDataDTO.isCredentialsDelete());
+        jenkinsGlobalRoleData.setCredentialsManageDomains(jenkinsGlobalRoleDataDTO.isCredentialsManageDomains());
+        jenkinsGlobalRoleData.setCredentialsUpdate(jenkinsGlobalRoleDataDTO.isCredentialsUpdate());
+        jenkinsGlobalRoleData.setCredentialsView(jenkinsGlobalRoleDataDTO.isCredentialsView());
+
+        jenkinsGlobalRoleData.setJobBuild(jenkinsGlobalRoleDataDTO.isJobBuild());
+        jenkinsGlobalRoleData.setJobCancel(jenkinsGlobalRoleDataDTO.isJobCancel());
+        jenkinsGlobalRoleData.setJobConfigure(jenkinsGlobalRoleDataDTO.isJobConfigure());
+        jenkinsGlobalRoleData.setJobCreate(jenkinsGlobalRoleDataDTO.isJobCreate());
+        jenkinsGlobalRoleData.setJobDelete(jenkinsGlobalRoleDataDTO.isJobDelete());
+        jenkinsGlobalRoleData.setJobDiscover(jenkinsGlobalRoleDataDTO.isJobDiscover());
+        jenkinsGlobalRoleData.setJobMove(jenkinsGlobalRoleDataDTO.isJobMove());
+        jenkinsGlobalRoleData.setJobRead(jenkinsGlobalRoleDataDTO.isJobRead());
+        jenkinsGlobalRoleData.setJobWorkSpace(jenkinsGlobalRoleDataDTO.isJobWorkSpace());
+
+        jenkinsGlobalRoleData.setRunDelete(jenkinsGlobalRoleDataDTO.isRunDelete());
+        jenkinsGlobalRoleData.setRunReplay(jenkinsGlobalRoleDataDTO.isRunReplay());
+        jenkinsGlobalRoleData.setRunUpdate(jenkinsGlobalRoleDataDTO.isRunUpdate());
+
+        jenkinsGlobalRoleData.setScmTag(jenkinsGlobalRoleDataDTO.isScmTag());
+
+        jenkinsGlobalRoleData.setLockResReserve(jenkinsGlobalRoleDataDTO.isLockResReserve());
+        jenkinsGlobalRoleData.setLockResUnlock(jenkinsGlobalRoleDataDTO.isLockResUnlock());
+        jenkinsGlobalRoleData.setLockResView(jenkinsGlobalRoleDataDTO.isLockResView());
+
+        jenkinsGlobalRoleData.setOverallAdminister(jenkinsGlobalRoleDataDTO.isOverallAdminister());
+        jenkinsGlobalRoleData.setOverallRead(jenkinsGlobalRoleDataDTO.isOverallRead());
+
+        jenkinsGlobalRoleData.setAgentBuild(jenkinsGlobalRoleDataDTO.isAgentBuild());
+        jenkinsGlobalRoleData.setAgentConfigure(jenkinsGlobalRoleDataDTO.isAgentConfigure());
+        jenkinsGlobalRoleData.setAgentConnect(jenkinsGlobalRoleDataDTO.isAgentConnect());
+        jenkinsGlobalRoleData.setAgentCreate(jenkinsGlobalRoleDataDTO.isAgentCreate());
+        jenkinsGlobalRoleData.setAgentDelete(jenkinsGlobalRoleDataDTO.isAgentDelete());
+        jenkinsGlobalRoleData.setAgentDisconnect(jenkinsGlobalRoleDataDTO.isAgentDisconnect());
+        jenkinsGlobalRoleData.setAgentProvision(jenkinsGlobalRoleDataDTO.isAgentProvision());
+
+        jenkinsGlobalRoleData.setViewConfigure(jenkinsGlobalRoleDataDTO.isViewConfigure());
+        jenkinsGlobalRoleData.setViewCreate(jenkinsGlobalRoleDataDTO.isViewCreate());
+        jenkinsGlobalRoleData.setViewDelete(jenkinsGlobalRoleDataDTO.isViewDelete());
+        jenkinsGlobalRoleData.setViewRead(jenkinsGlobalRoleDataDTO.isViewRead());
+
+        return jenkinsGlobalRoleData;
+    }
+
+    public Integer createJenkinsItemRole(JenkinsItemRoleDataDTO jenkinsItemRoleDataDTO) throws IOException {
+        JenkinsItemRoleData jIData = jenkinsItemRoleRepository.findByName(jenkinsItemRoleDataDTO.getName());
         // check whether there is existing one
         if(jIData == null){
             JenkinsAPIManager jenkinsAPIManager = new JenkinsAPIManager();
-            jenkinsAPIManager.createJenkinsItemRole(jenkinsItemRoleData);
-            jenkinsItemRoleRepository.save(jenkinsItemRoleData);
+            jenkinsAPIManager.createJenkinsItemRole(jenkinsItemRoleDataDTO);
+            jenkinsItemRoleRepository.save(mapJenkinsItemRoleDataDTOToEntity(jenkinsItemRoleDataDTO));
         }else if(jIData.getStatus().equals("Inactive")){
             jIData.setStatus("Active");
             jenkinsItemRoleRepository.save(jIData);
@@ -128,6 +180,45 @@ public class JenkinsService {
 
         return 1;
     }
+
+    public JenkinsItemRoleData mapJenkinsItemRoleDataDTOToEntity(JenkinsItemRoleDataDTO jenkinsItemRoleDataDTO){
+        JenkinsItemRoleData jenkinsItemRoleData = new JenkinsItemRoleData();
+
+        jenkinsItemRoleData.setName(jenkinsItemRoleDataDTO.getName());
+        jenkinsItemRoleData.setPattern(jenkinsItemRoleDataDTO.getPattern());
+        // set up project data DTO
+        ProjectData projectData = projectRepository.getOne(jenkinsItemRoleDataDTO.getProjectDataDTO().getId());
+        ProjectDataDTO projectDataDTO = new ProjectDataDTO();
+        jenkinsItemRoleData.setProjectData(projectData);
+        jenkinsItemRoleData.setStatus("Active");
+        jenkinsItemRoleData.setCredentialsCreate(jenkinsItemRoleDataDTO.isCredentialsCreate());
+        jenkinsItemRoleData.setCredentialsDelete(jenkinsItemRoleDataDTO.isCredentialsDelete());
+        jenkinsItemRoleData.setCredentialsUpdate(jenkinsItemRoleDataDTO.isCredentialsUpdate());
+        jenkinsItemRoleData.setCredentialsManageDomains(jenkinsItemRoleDataDTO.isCredentialsManageDomains());
+        jenkinsItemRoleData.setCredentialsView(jenkinsItemRoleDataDTO.isCredentialsView());
+
+        jenkinsItemRoleData.setRunDelete(jenkinsItemRoleDataDTO.isRunDelete());
+        jenkinsItemRoleData.setRunReplay(jenkinsItemRoleDataDTO.isRunReplay());
+        jenkinsItemRoleData.setRunUpdate(jenkinsItemRoleDataDTO.isRunUpdate());
+
+        jenkinsItemRoleData.setJobBuild(jenkinsItemRoleDataDTO.isJobBuild());
+        jenkinsItemRoleData.setJobCancel(jenkinsItemRoleDataDTO.isJobCancel());
+        jenkinsItemRoleData.setJobConfigure(jenkinsItemRoleDataDTO.isJobConfigure());
+        jenkinsItemRoleData.setJobCreate(jenkinsItemRoleDataDTO.isJobCreate());
+        jenkinsItemRoleData.setJobDelete(jenkinsItemRoleDataDTO.isJobDelete());
+        jenkinsItemRoleData.setJobDiscover(jenkinsItemRoleDataDTO.isJobDiscover());
+        jenkinsItemRoleData.setJobMove(jenkinsItemRoleDataDTO.isJobMove());
+        jenkinsItemRoleData.setJobRead(jenkinsItemRoleDataDTO.isJobRead());
+        jenkinsItemRoleData.setJobWorkSpace(jenkinsItemRoleDataDTO.isJobWorkSpace());
+
+        jenkinsItemRoleData.setScmTag(jenkinsItemRoleDataDTO.isScmTag());
+
+        jenkinsItemRoleData.setLockResReserve(jenkinsItemRoleDataDTO.isLockResReserve());
+        jenkinsItemRoleData.setLockResUnlock(jenkinsItemRoleDataDTO.isLockResUnlock());
+        jenkinsItemRoleData.setLockResView(jenkinsItemRoleDataDTO.isLockResView());
+        return jenkinsItemRoleData;
+    }
+
 
     public Integer deleteJenkinsRoles(String roleName, String type) throws IOException {
 //        globalRoles, projectRoles

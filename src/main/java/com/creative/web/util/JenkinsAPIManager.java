@@ -1,5 +1,7 @@
 package com.creative.web.util;
 
+import com.creative.web.dto.JenkinsGlobalRoleDataDTO;
+import com.creative.web.dto.JenkinsItemRoleDataDTO;
 import com.creative.web.dto.JenkinsUserDataDTO;
 import com.creative.web.model.*;
 import com.creative.web.service.JenkinsCreateConfigFile;
@@ -156,7 +158,7 @@ public class JenkinsAPIManager {
     * */
 
     //    create global rule
-    public void createJenkinsGlobalRole(JenkinsGlobalRoleData jenkinsGlobalRoleData) throws IOException {
+    public void createJenkinsGlobalRole(JenkinsGlobalRoleDataDTO jenkinsGlobalRoleData) throws IOException {
         StringBuilder permissionIds = new StringBuilder();
         formParams.add(new BasicNameValuePair("type", "globalRoles"));
         formParams.add(new BasicNameValuePair("roleName", jenkinsGlobalRoleData.getName()));
@@ -277,7 +279,7 @@ public class JenkinsAPIManager {
     }
 
     // create item rule
-    public void createJenkinsItemRole(JenkinsItemRoleData jenkinsItemRoleData) throws IOException {
+    public void createJenkinsItemRole(JenkinsItemRoleDataDTO jenkinsItemRoleData) throws IOException {
         StringBuilder permissionIds = new StringBuilder();
 
         formParams.add(new BasicNameValuePair("type", "projectRoles"));

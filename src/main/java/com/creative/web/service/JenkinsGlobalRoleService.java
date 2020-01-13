@@ -19,108 +19,64 @@ public class JenkinsGlobalRoleService {
         List<JenkinsGlobalRoleData> jenkinsGlobalRoleData = jenkinsGlobalRoleRepository.findAll();
         List<JenkinsGlobalRoleDataDTO> jenkinsGlobalRoleDataDTOS = new ArrayList<>();
         for(JenkinsGlobalRoleData jGRD : jenkinsGlobalRoleData){
-            JenkinsGlobalRoleDataDTO jenkinsGlobalRoleDataDTO = new JenkinsGlobalRoleDataDTO();
-            jenkinsGlobalRoleDataDTO.setId(jGRD.getId());
-            jenkinsGlobalRoleDataDTO.setName(jGRD.getName());
-            jenkinsGlobalRoleDataDTO.setStatus(jGRD.getStatus());
-
-            jenkinsGlobalRoleDataDTO.setCredentialsCreate(jGRD.isCredentialsCreate());
-            jenkinsGlobalRoleDataDTO.setCredentialsDelete(jGRD.isCredentialsDelete());
-            jenkinsGlobalRoleDataDTO.setCredentialsManageDomains(jGRD.isCredentialsManageDomains());
-            jenkinsGlobalRoleDataDTO.setCredentialsUpdate(jGRD.isCredentialsUpdate());
-            jenkinsGlobalRoleDataDTO.setCredentialsView(jGRD.isCredentialsView());
-
-            jenkinsGlobalRoleDataDTO.setJobBuild(jGRD.isJobBuild());
-            jenkinsGlobalRoleDataDTO.setJobCancel(jGRD.isJobCancel());
-            jenkinsGlobalRoleDataDTO.setJobConfigure(jGRD.isJobConfigure());
-            jenkinsGlobalRoleDataDTO.setJobCreate(jGRD.isJobCreate());
-            jenkinsGlobalRoleDataDTO.setJobDelete(jGRD.isJobDelete());
-            jenkinsGlobalRoleDataDTO.setJobDiscover(jGRD.isJobDiscover());
-            jenkinsGlobalRoleDataDTO.setJobMove(jGRD.isJobMove());
-            jenkinsGlobalRoleDataDTO.setJobRead(jGRD.isJobRead());
-            jenkinsGlobalRoleDataDTO.setJobWorkSpace(jGRD.isJobWorkSpace());
-
-            jenkinsGlobalRoleDataDTO.setRunDelete(jGRD.isRunDelete());
-            jenkinsGlobalRoleDataDTO.setRunReplay(jGRD.isRunReplay());
-            jenkinsGlobalRoleDataDTO.setRunUpdate(jGRD.isRunUpdate());
-
-            jenkinsGlobalRoleDataDTO.setScmTag(jGRD.isScmTag());
-
-            jenkinsGlobalRoleDataDTO.setLockResReserve(jGRD.isLockResReserve());
-            jenkinsGlobalRoleDataDTO.setLockResUnlock(jGRD.isLockResUnlock());
-            jenkinsGlobalRoleDataDTO.setLockResView(jGRD.isLockResView());
-
-            jenkinsGlobalRoleDataDTO.setOverallAdminister(jGRD.isOverallAdminister());
-            jenkinsGlobalRoleDataDTO.setOverallRead(jGRD.isOverallRead());
-
-            jenkinsGlobalRoleDataDTO.setAgentBuild(jGRD.isAgentBuild());
-            jenkinsGlobalRoleDataDTO.setAgentConfigure(jGRD.isAgentConfigure());
-            jenkinsGlobalRoleDataDTO.setAgentConnect(jGRD.isAgentConnect());
-            jenkinsGlobalRoleDataDTO.setAgentCreate(jGRD.isAgentCreate());
-            jenkinsGlobalRoleDataDTO.setAgentDelete(jGRD.isAgentDelete());
-            jenkinsGlobalRoleDataDTO.setAgentDisconnect(jGRD.isAgentDisconnect());
-            jenkinsGlobalRoleDataDTO.setAgentProvision(jGRD.isAgentProvision());
-
-            jenkinsGlobalRoleDataDTO.setViewConfigure(jGRD.isViewConfigure());
-            jenkinsGlobalRoleDataDTO.setViewCreate(jGRD.isViewCreate());
-            jenkinsGlobalRoleDataDTO.setViewDelete(jGRD.isViewDelete());
-            jenkinsGlobalRoleDataDTO.setViewRead(jGRD.isViewRead());
-
-            jenkinsGlobalRoleDataDTOS.add(jenkinsGlobalRoleDataDTO);
+            jenkinsGlobalRoleDataDTOS.add(mapJenkinsGlobalRoleDataToDTO(jGRD));
         }
         return jenkinsGlobalRoleDataDTOS;
     }
 
-    public JenkinsGlobalRoleDataDTO findById(int id){
+    public JenkinsGlobalRoleDataDTO getJenkinsGlobalRoleDataById(int id){
         JenkinsGlobalRoleData jenkinsGlobalRoleData = jenkinsGlobalRoleRepository.getOne(id);
+        return mapJenkinsGlobalRoleDataToDTO(jenkinsGlobalRoleData);
+    }
 
+    public JenkinsGlobalRoleDataDTO mapJenkinsGlobalRoleDataToDTO(JenkinsGlobalRoleData jenkinsGlobalRoleData){
         JenkinsGlobalRoleDataDTO jenkinsGlobalRoleDataDTO = new JenkinsGlobalRoleDataDTO();
 
-        jenkinsGlobalRoleDataDTO.setId(jenkinsGlobalRoleDataDTO.getId());
-        jenkinsGlobalRoleDataDTO.setName(jenkinsGlobalRoleDataDTO.getName());
-        jenkinsGlobalRoleDataDTO.setStatus(jenkinsGlobalRoleDataDTO.getStatus());
+        jenkinsGlobalRoleDataDTO.setId(jenkinsGlobalRoleData.getId());
+        jenkinsGlobalRoleDataDTO.setName(jenkinsGlobalRoleData.getName());
+        jenkinsGlobalRoleDataDTO.setStatus(jenkinsGlobalRoleData.getStatus());
 
-        jenkinsGlobalRoleDataDTO.setCredentialsCreate(jenkinsGlobalRoleDataDTO.isCredentialsCreate());
-        jenkinsGlobalRoleDataDTO.setCredentialsDelete(jenkinsGlobalRoleDataDTO.isCredentialsDelete());
-        jenkinsGlobalRoleDataDTO.setCredentialsManageDomains(jenkinsGlobalRoleDataDTO.isCredentialsManageDomains());
-        jenkinsGlobalRoleDataDTO.setCredentialsUpdate(jenkinsGlobalRoleDataDTO.isCredentialsUpdate());
-        jenkinsGlobalRoleDataDTO.setCredentialsView(jenkinsGlobalRoleDataDTO.isCredentialsView());
+        jenkinsGlobalRoleDataDTO.setCredentialsCreate(jenkinsGlobalRoleData.isCredentialsCreate());
+        jenkinsGlobalRoleDataDTO.setCredentialsDelete(jenkinsGlobalRoleData.isCredentialsDelete());
+        jenkinsGlobalRoleDataDTO.setCredentialsManageDomains(jenkinsGlobalRoleData.isCredentialsManageDomains());
+        jenkinsGlobalRoleDataDTO.setCredentialsUpdate(jenkinsGlobalRoleData.isCredentialsUpdate());
+        jenkinsGlobalRoleDataDTO.setCredentialsView(jenkinsGlobalRoleData.isCredentialsView());
 
-        jenkinsGlobalRoleDataDTO.setJobBuild(jenkinsGlobalRoleDataDTO.isJobBuild());
-        jenkinsGlobalRoleDataDTO.setJobCancel(jenkinsGlobalRoleDataDTO.isJobCancel());
-        jenkinsGlobalRoleDataDTO.setJobConfigure(jenkinsGlobalRoleDataDTO.isJobConfigure());
-        jenkinsGlobalRoleDataDTO.setJobCreate(jenkinsGlobalRoleDataDTO.isJobCreate());
-        jenkinsGlobalRoleDataDTO.setJobDelete(jenkinsGlobalRoleDataDTO.isJobDelete());
-        jenkinsGlobalRoleDataDTO.setJobDiscover(jenkinsGlobalRoleDataDTO.isJobDiscover());
-        jenkinsGlobalRoleDataDTO.setJobMove(jenkinsGlobalRoleDataDTO.isJobMove());
-        jenkinsGlobalRoleDataDTO.setJobRead(jenkinsGlobalRoleDataDTO.isJobRead());
-        jenkinsGlobalRoleDataDTO.setJobWorkSpace(jenkinsGlobalRoleDataDTO.isJobWorkSpace());
+        jenkinsGlobalRoleDataDTO.setJobBuild(jenkinsGlobalRoleData.isJobBuild());
+        jenkinsGlobalRoleDataDTO.setJobCancel(jenkinsGlobalRoleData.isJobCancel());
+        jenkinsGlobalRoleDataDTO.setJobConfigure(jenkinsGlobalRoleData.isJobConfigure());
+        jenkinsGlobalRoleDataDTO.setJobCreate(jenkinsGlobalRoleData.isJobCreate());
+        jenkinsGlobalRoleDataDTO.setJobDelete(jenkinsGlobalRoleData.isJobDelete());
+        jenkinsGlobalRoleDataDTO.setJobDiscover(jenkinsGlobalRoleData.isJobDiscover());
+        jenkinsGlobalRoleDataDTO.setJobMove(jenkinsGlobalRoleData.isJobMove());
+        jenkinsGlobalRoleDataDTO.setJobRead(jenkinsGlobalRoleData.isJobRead());
+        jenkinsGlobalRoleDataDTO.setJobWorkSpace(jenkinsGlobalRoleData.isJobWorkSpace());
 
-        jenkinsGlobalRoleDataDTO.setRunDelete(jenkinsGlobalRoleDataDTO.isRunDelete());
-        jenkinsGlobalRoleDataDTO.setRunReplay(jenkinsGlobalRoleDataDTO.isRunReplay());
-        jenkinsGlobalRoleDataDTO.setRunUpdate(jenkinsGlobalRoleDataDTO.isRunUpdate());
+        jenkinsGlobalRoleDataDTO.setRunDelete(jenkinsGlobalRoleData.isRunDelete());
+        jenkinsGlobalRoleDataDTO.setRunReplay(jenkinsGlobalRoleData.isRunReplay());
+        jenkinsGlobalRoleDataDTO.setRunUpdate(jenkinsGlobalRoleData.isRunUpdate());
 
-        jenkinsGlobalRoleDataDTO.setScmTag(jenkinsGlobalRoleDataDTO.isScmTag());
+        jenkinsGlobalRoleDataDTO.setScmTag(jenkinsGlobalRoleData.isScmTag());
 
-        jenkinsGlobalRoleDataDTO.setLockResReserve(jenkinsGlobalRoleDataDTO.isLockResReserve());
-        jenkinsGlobalRoleDataDTO.setLockResUnlock(jenkinsGlobalRoleDataDTO.isLockResUnlock());
-        jenkinsGlobalRoleDataDTO.setLockResView(jenkinsGlobalRoleDataDTO.isLockResView());
+        jenkinsGlobalRoleDataDTO.setLockResReserve(jenkinsGlobalRoleData.isLockResReserve());
+        jenkinsGlobalRoleDataDTO.setLockResUnlock(jenkinsGlobalRoleData.isLockResUnlock());
+        jenkinsGlobalRoleDataDTO.setLockResView(jenkinsGlobalRoleData.isLockResView());
 
-        jenkinsGlobalRoleDataDTO.setOverallAdminister(jenkinsGlobalRoleDataDTO.isOverallAdminister());
-        jenkinsGlobalRoleDataDTO.setOverallRead(jenkinsGlobalRoleDataDTO.isOverallRead());
+        jenkinsGlobalRoleDataDTO.setOverallAdminister(jenkinsGlobalRoleData.isOverallAdminister());
+        jenkinsGlobalRoleDataDTO.setOverallRead(jenkinsGlobalRoleData.isOverallRead());
 
-        jenkinsGlobalRoleDataDTO.setAgentBuild(jenkinsGlobalRoleDataDTO.isAgentBuild());
-        jenkinsGlobalRoleDataDTO.setAgentConfigure(jenkinsGlobalRoleDataDTO.isAgentConfigure());
-        jenkinsGlobalRoleDataDTO.setAgentConnect(jenkinsGlobalRoleDataDTO.isAgentConnect());
-        jenkinsGlobalRoleDataDTO.setAgentCreate(jenkinsGlobalRoleDataDTO.isAgentCreate());
-        jenkinsGlobalRoleDataDTO.setAgentDelete(jenkinsGlobalRoleDataDTO.isAgentDelete());
-        jenkinsGlobalRoleDataDTO.setAgentDisconnect(jenkinsGlobalRoleDataDTO.isAgentDisconnect());
-        jenkinsGlobalRoleDataDTO.setAgentProvision(jenkinsGlobalRoleDataDTO.isAgentProvision());
+        jenkinsGlobalRoleDataDTO.setAgentBuild(jenkinsGlobalRoleData.isAgentBuild());
+        jenkinsGlobalRoleDataDTO.setAgentConfigure(jenkinsGlobalRoleData.isAgentConfigure());
+        jenkinsGlobalRoleDataDTO.setAgentConnect(jenkinsGlobalRoleData.isAgentConnect());
+        jenkinsGlobalRoleDataDTO.setAgentCreate(jenkinsGlobalRoleData.isAgentCreate());
+        jenkinsGlobalRoleDataDTO.setAgentDelete(jenkinsGlobalRoleData.isAgentDelete());
+        jenkinsGlobalRoleDataDTO.setAgentDisconnect(jenkinsGlobalRoleData.isAgentDisconnect());
+        jenkinsGlobalRoleDataDTO.setAgentProvision(jenkinsGlobalRoleData.isAgentProvision());
 
-        jenkinsGlobalRoleDataDTO.setViewConfigure(jenkinsGlobalRoleDataDTO.isViewConfigure());
-        jenkinsGlobalRoleDataDTO.setViewCreate(jenkinsGlobalRoleDataDTO.isViewCreate());
-        jenkinsGlobalRoleDataDTO.setViewDelete(jenkinsGlobalRoleDataDTO.isViewDelete());
-        jenkinsGlobalRoleDataDTO.setViewRead(jenkinsGlobalRoleDataDTO.isViewRead());
+        jenkinsGlobalRoleDataDTO.setViewConfigure(jenkinsGlobalRoleData.isViewConfigure());
+        jenkinsGlobalRoleDataDTO.setViewCreate(jenkinsGlobalRoleData.isViewCreate());
+        jenkinsGlobalRoleDataDTO.setViewDelete(jenkinsGlobalRoleData.isViewDelete());
+        jenkinsGlobalRoleDataDTO.setViewRead(jenkinsGlobalRoleData.isViewRead());
 
         return jenkinsGlobalRoleDataDTO;
     }
