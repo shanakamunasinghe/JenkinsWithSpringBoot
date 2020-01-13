@@ -1,17 +1,20 @@
 package com.creative.web.service;
 
-import com.creative.web.dto.AutomationToolDataDTO;
-import com.creative.web.dto.JenkinsGlobalRoleDataDTO;
-import com.creative.web.dto.JenkinsItemRoleDataDTO;
-import com.creative.web.dto.ProjectDataDTO;
+import com.creative.web.dto.*;
 import com.creative.web.model.*;
 import com.creative.web.repository.*;
 import com.creative.web.util.JenkinsAPIManager;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class JenkinsService {
@@ -33,6 +36,9 @@ public class JenkinsService {
     @Autowired
     public ProjectRepository projectRepository;
 
+    @Autowired
+    public JenkinsJobRepository jenkinsJobRepository;
+
 
     public int runJenkinsJob(String jobName) throws IOException {
         // Jenkins Job History has to update
@@ -41,15 +47,6 @@ public class JenkinsService {
         return 1;
     }
 
-//    public int deleteJenkinsUser(String userName) throws IOException {
-//        JenkinsAPIManager jenkinsAPIManager = new JenkinsAPIManager();
-//        JenkinsUserData jenkinsUserData = jenkinsUserRepository.findByJenkinsName(userName);
-//        if(jenkinsUserData != null){
-//            jenkinsAPIManager.deleteJenkinsUser(userName);
-//            jenkinsUserData.setStatus("Inactive");
-//        }
-//        return 1;
-//    }
 
     public int getJenkinsStatus() throws IOException {
         JenkinsAPIManager jenkinsAPIManager = new JenkinsAPIManager();
@@ -57,41 +54,23 @@ public class JenkinsService {
         return 1;
     }
 
-//    public int createJenkinsUser(UserDataDTO user) throws IOException {
-//        JenkinsAPIManager jenkinsAPIManager = new JenkinsAPIManager();
-//        JenkinsUserData jenkinsUserData = jenkinsUserRepository.findByJenkinsName(user.getJenkinsName());
-//        if(jenkinsUserData != null){
-//            // cant create from the same name
-//        }else{
-//            JenkinsUserDataDTO jenkinsUserDataDTO = new JenkinsUserDataDTO(user.getName(), user.getJenkinsPassword(), user.getName() + "@gmail.com");
-//            jenkinsAPIManager.createJenkinsUser(jenkinsUserDataDTO);
-//            JenkinsUserData jUD = new JenkinsUserData();
-//            jUD.setName(user.getName());
-//            jUD.setJenkinsName(user.getJenkinsName());
-//            jUD.setJenkinsPassword(user.getJenkinsPassword());
-//            jUD.setStatus("Active");
-//            String apiToken = this.generateJenkinsUserAPIToken(user.getJenkinsName());
-//            if(apiToken != null){
-//                jUD.setJenkinsAPIToken(apiToken);
-//            }
-//
-//            jenkinsUserRepository.save(jUD);
-//        }
-//
-//        return 1;
-//    }
-
     public String generateJenkinsUserAPIToken(String userName) throws IOException {
         JenkinsAPIManager jenkinsAPIManager = new JenkinsAPIManager();
         String apiToken = jenkinsAPIManager.generateJenkinsUserAPIToken(userName);
         return apiToken;
     }
 
-    // has to change according to Object
-    public Integer createJenkinsJob(String jobName) throws IOException {
+    public Integer createJenkinsJob(JenkinsJobDataDTO jenkinsJobDataDTO) throws IOException {
         JenkinsAPIManager jenkinsAPIManager = new JenkinsAPIManager();
-        jenkinsAPIManager.createJenkinsJob(jobName);
+        jenkinsAPIManager.createJenkinsJob(jenkinsJobDataDTO.getJobName());
 
+        JenkinsJobData jenkinsJobData = new JenkinsJobData();
+        jenkinsJobData.setJobName(jenkinsJobDataDTO.getJobName());
+        ProjectData projectData = projectRepository.getOne(jenkinsJobDataDTO.getProjectDataDTO().getId());
+        jenkinsJobData.setProjectData(projectData);
+        jenkinsJobData.setStatus("Active");
+        jenkinsJobData.setDescription(jenkinsJobDataDTO.getDescription());
+        jenkinsJobRepository.save(jenkinsJobData);
         return 1;
     }
 

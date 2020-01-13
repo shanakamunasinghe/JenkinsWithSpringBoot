@@ -25,13 +25,13 @@ public class JenkinsNotificationService {
         JenkinsJobHistoryData jenkinsJobHistoryData = new JenkinsJobHistoryData();
 
         // i have to check whether the
-        //JenkinsJobData jenkinsJobData = jenkinsJobRepository.findByJobName(notification.getName());
-        //jenkinsJobHistoryData.setJenkinsJobData(jenkinsJobData);
+        JenkinsJobData jenkinsJobData = jenkinsJobRepository.findByJobName(notification.getName());
+        jenkinsJobHistoryData.setJenkinsJob(jenkinsJobData);
         jenkinsJobHistoryData.setPhase(notification.getBuild().getPhase());
         jenkinsJobHistoryData.setStatus(notification.getBuild().getStatus());
-        //jenkinsJobHistoryRepository.save(jenkinsJobHistoryData);
+        jenkinsJobHistoryRepository.save(jenkinsJobHistoryData);
 
-        // i have to catch according to pattern plz check it
+        // i have to catch according to pattern plz check it = Done
 
     }
 

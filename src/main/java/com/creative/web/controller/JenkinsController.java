@@ -1,4 +1,5 @@
 package com.creative.web.controller;
+import com.creative.web.dto.JenkinsJobDataDTO;
 import com.creative.web.model.JenkinsJobData;
 import com.creative.web.service.JenkinsService;
 import com.creative.web.service.JenkinsUserService;
@@ -28,8 +29,8 @@ public class JenkinsController {
     @RequestMapping(value = "/runJenkinsJob",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Integer> runJenkinsJob(@RequestBody String jobName) throws IOException {
-        return new ResponseEntity<Integer>(jenkinsService.runJenkinsJob(jobName), HttpStatus.OK);
+    public ResponseEntity<Integer> runJenkinsJob(@RequestBody JenkinsJobDataDTO jenkinsJobDataDTO) throws IOException {
+        return new ResponseEntity<Integer>(jenkinsService.runJenkinsJob(jenkinsJobDataDTO.getJobName()), HttpStatus.OK);
     }
     @RequestMapping(value = "/getJenkinsStatus",
             method = RequestMethod.GET,
@@ -41,8 +42,8 @@ public class JenkinsController {
     @RequestMapping(value = "/createJenkinsJob",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Integer> createJenkinsJob(@RequestBody JenkinsJobData jenkinsJobData) throws IOException {
-        return new ResponseEntity<Integer>(jenkinsService.createJenkinsJob(jenkinsJobData.getJobName()), HttpStatus.OK);
+    public ResponseEntity<Integer> createJenkinsJob(@RequestBody JenkinsJobDataDTO jenkinsJobDataDTO) throws IOException {
+        return new ResponseEntity<Integer>(jenkinsService.createJenkinsJob(jenkinsJobDataDTO), HttpStatus.OK);
     }
 
 

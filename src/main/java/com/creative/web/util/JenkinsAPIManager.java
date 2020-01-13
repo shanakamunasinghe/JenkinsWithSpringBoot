@@ -381,7 +381,8 @@ public class JenkinsAPIManager {
 
         formParams.add(new BasicNameValuePair("type", type));
         formParams.add(new BasicNameValuePair("roleName", roleName));
-        formParams.add(new BasicNameValuePair("username", username));
+        formParams.add(new BasicNameValuePair("sid", username));
+
 
         UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formParams, Consts.UTF_8);
         HttpPost httppost = new HttpPost("http://localhost:8080/role-strategy/strategy/assignRole");
@@ -396,7 +397,7 @@ public class JenkinsAPIManager {
     public void deleteUserFromAllRoles(String type, String username) throws IOException {
 
         formParams.add(new BasicNameValuePair("type", type));
-        formParams.add(new BasicNameValuePair("username", username));
+        formParams.add(new BasicNameValuePair("sid", username));
 
         UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formParams, Consts.UTF_8);
         HttpPost httppost = new HttpPost("http://localhost:8080/role-strategy/strategy/deleteSid");
@@ -411,7 +412,7 @@ public class JenkinsAPIManager {
     public void unassignedUserRole(String roleName, String type, String username) throws IOException {
         formParams.add(new BasicNameValuePair("type", type));
         formParams.add(new BasicNameValuePair("roleName", roleName));
-        formParams.add(new BasicNameValuePair("username", username));
+        formParams.add(new BasicNameValuePair("sid", username));
 
         UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formParams, Consts.UTF_8);
         HttpPost httppost = new HttpPost("http://localhost:8080/role-strategy/strategy/unassignRole");

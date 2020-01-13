@@ -18,7 +18,7 @@ public class EmployeeData {
     private String status;
     private String role;
 
-
+    // the property has to change
     @OneToOne(cascade = CascadeType.REMOVE,
             fetch = FetchType.LAZY)
     @JoinColumn(name = "jenkins_user_id",

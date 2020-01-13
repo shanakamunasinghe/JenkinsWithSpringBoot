@@ -3,6 +3,7 @@ package com.creative.web.service;
 import com.creative.web.dto.JenkinsUserDataDTO;
 import com.creative.web.dto.JenkinsUserDTO;
 import com.creative.web.model.JenkinsUserData;
+import com.creative.web.repository.EmployeeRepository;
 import com.creative.web.repository.JenkinsUserRepository;
 import com.creative.web.util.JenkinsAPIManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class JenkinsUserService {
     private JenkinsUserRepository jenkinsUserRepository;
 
     @Autowired
+    public EmployeeRepository employeeRepository;
+
+    @Autowired
     private JenkinsService jenkinsService;
 
     public List<JenkinsUserDTO> findALLJenkinsUsers(){
@@ -31,6 +35,7 @@ public class JenkinsUserService {
                 jenkinsUserDTO.setName(user.getName());
                 jenkinsUserDTO.setJenkinsName(user.getJenkinsName());
                 jenkinsUserDTO.setJenkinsPassword(user.getJenkinsPassword());
+                jenkinsUserDTO.setJenkinsAPIToken(user.getJenkinsAPIToken());
                 userDTOList.add(jenkinsUserDTO);
 
             }
@@ -38,13 +43,14 @@ public class JenkinsUserService {
         return userDTOList;
     }
 
-    public JenkinsUserDTO findById(Integer id){
+    public JenkinsUserDTO getJenkinsUserById(Integer id){
         JenkinsUserData user = jenkinsUserRepository.getOne(id);
         JenkinsUserDTO jenkinsUserDTO = new JenkinsUserDTO();
         jenkinsUserDTO.setId(user.getId());
         jenkinsUserDTO.setName(user.getName());
         jenkinsUserDTO.setJenkinsName(user.getJenkinsName());
         jenkinsUserDTO.setJenkinsPassword(user.getJenkinsPassword());
+        jenkinsUserDTO.setJenkinsAPIToken(user.getJenkinsAPIToken());
         return jenkinsUserDTO;
     }
 
@@ -65,11 +71,12 @@ public class JenkinsUserService {
             if(apiToken != null){
                 jUD.setJenkinsAPIToken(apiToken);
             }
-
+            jUD.setEmployeeData(employeeRepository.findByName(userDTO.getName()));
             jenkinsUserRepository.save(jUD);
         }
 
     }
+
     public int inactiveJenkinsUser(String userName) throws IOException {
         JenkinsAPIManager jenkinsAPIManager = new JenkinsAPIManager();
         JenkinsUserData jenkinsUserData = jenkinsUserRepository.findByJenkinsName(userName);
@@ -80,14 +87,14 @@ public class JenkinsUserService {
         return 1;
     }
 
-    public void updatejenkinsUser(JenkinsUserDTO userDTO){
+    public void updateJenkinsUser(JenkinsUserDTO userDTO){
         JenkinsUserData user = new JenkinsUserData();
         user.setName(userDTO.getName());
         jenkinsUserRepository.save(user);
     }
 
 
-    public void deletejenkinsUser(JenkinsUserDTO userDTO) throws IOException {
+    public void deleteJenkinsUser(JenkinsUserDTO userDTO) throws IOException {
         JenkinsAPIManager jenkinsAPIManager = new JenkinsAPIManager();
         JenkinsUserData user = new JenkinsUserData();
         user.setName(userDTO.getName());

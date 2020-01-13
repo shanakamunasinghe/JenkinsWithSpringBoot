@@ -27,7 +27,7 @@ public class JenkinsUserController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<JenkinsUserDTO> getUserData(@PathVariable("id") Integer id) {
-        return new ResponseEntity<JenkinsUserDTO>(jenkinsUserService.findById(id), HttpStatus.OK);
+        return new ResponseEntity<JenkinsUserDTO>(jenkinsUserService.getJenkinsUserById(id), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/jenkinsUserData",
@@ -42,7 +42,7 @@ public class JenkinsUserController {
             method = RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Integer> updateUserData(@RequestBody JenkinsUserDTO user){
-        jenkinsUserService.updatejenkinsUser(user);
+        jenkinsUserService.updateJenkinsUser(user);
         return new ResponseEntity<Integer>(user.getId(), HttpStatus.OK);
     }
 
@@ -50,7 +50,7 @@ public class JenkinsUserController {
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Integer> deleteUserData(@RequestBody JenkinsUserDTO user) throws IOException {
-        jenkinsUserService.deletejenkinsUser(user);
+        jenkinsUserService.deleteJenkinsUser(user);
         return new ResponseEntity<Integer>(user.getId(), HttpStatus.OK);
     }
 }
