@@ -21,14 +21,10 @@ public class EmployeeData {
     // the property has to change
     @OneToOne(cascade = CascadeType.REMOVE,
             fetch = FetchType.LAZY)
-    @JoinColumn(name = "jenkins_user_id",
-            unique = true,
-            nullable = true)
     private JenkinsUserData jenkinsUserData;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "user")
-    @JsonIgnore
     private Set<EmployeeProjectsData> employeeProjectsData;
 
     @CreationTimestamp

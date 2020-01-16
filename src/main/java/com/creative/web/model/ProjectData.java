@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Set;
 
 @Entity
@@ -18,6 +19,8 @@ public class ProjectData {
     private Integer createUserId;
     private String status;
 
+
+    // item role
     @JsonBackReference
     @ManyToOne(cascade = CascadeType.DETACH,
             fetch = FetchType.LAZY)
@@ -28,6 +31,10 @@ public class ProjectData {
     @JsonManagedReference
     @OneToMany(mappedBy = "project")
     private  Set<EmployeeProjectsData> employeeProjectsData;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "projectData")
+    private Collection<JenkinsItemRoleData> jenkinsItemRoles;
 
     public ProjectData() {
     }
@@ -77,6 +84,14 @@ public class ProjectData {
 
     public void setEmployeeProjectsData(Set<EmployeeProjectsData> employeeProjectsData) {
         this.employeeProjectsData = employeeProjectsData;
+    }
+
+    public Collection<JenkinsItemRoleData> getJenkinsItemRoles() {
+        return jenkinsItemRoles;
+    }
+
+    public void setJenkinsItemRoles(Collection<JenkinsItemRoleData> jenkinsItemRoles) {
+        this.jenkinsItemRoles = jenkinsItemRoles;
     }
 
     public AutomationToolData getAutomationToolData() {
