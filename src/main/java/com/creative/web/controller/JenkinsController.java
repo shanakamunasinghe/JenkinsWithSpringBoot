@@ -1,6 +1,5 @@
 package com.creative.web.controller;
 import com.creative.web.dto.JenkinsJobDataDTO;
-import com.creative.web.model.JenkinsJobData;
 import com.creative.web.service.JenkinsService;
 import com.creative.web.service.JenkinsUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,9 +44,4 @@ public class JenkinsController {
     public ResponseEntity<Integer> createJenkinsJob(@RequestBody JenkinsJobDataDTO jenkinsJobDataDTO) throws IOException {
         return new ResponseEntity<Integer>(jenkinsService.createJenkinsJob(jenkinsJobDataDTO), HttpStatus.OK);
     }
-
-
-
-
-
 }

@@ -4,7 +4,6 @@ import com.creative.web.model.AutomationToolData;
 
 public class ProjectDataDTO {
     private Integer id;
-
     private String name;
     private Integer createUserId;
     private String status;
